@@ -2,17 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoSingleTon<GameManager>
 {
-    // Start is called before the first frame update
+    private GravityState gameGravityState;
+
     void Start()
     {
-        
+        gameGravityState = GravityState.Down;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetGravityState(GravityState state)
     {
-        
+        gameGravityState = state;
+        EventManager.TriggerEvent("CHANGEGRAVITYSTATE");
+    }
+
+    public float GetZRotate()
+    {
+        switch (gameGravityState)
+        {
+            case GravityState.Left:
+                return -90f;
+            case GravityState.Right:
+                return 90f;
+            case GravityState.Down:
+                return 0f;
+            case GravityState.Up:
+                return 180f;
+
+            default:
+                return 0f;
+        }
     }
 }

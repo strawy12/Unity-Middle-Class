@@ -3,19 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
-{
-    private enum EGravityState
-    {
-        Down, 
-        Right,
-        Up,
-        Left
-    }
-    
-    private EGravityState currentGravity;
-    
+{ 
     private Vector2 currentGravityDir;
-
 
     public float speed;
     public float rotateSpeed = 10.0f;
@@ -29,7 +18,6 @@ public class Player : MonoBehaviour
     {
         body = GetComponent<Rigidbody2D>();
         //GetComponent를 활용하여 body에 해당 오브젝트의 Rigidbody를 넣어준다. 
-        currentGravity = EGravityState.Down;
         currentGravityDir = Vector2.down;
     }
 
@@ -81,28 +69,28 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            currentGravity = EGravityState.Left;
             currentGravityDir = Vector2.left;
+            GameManager.Inst.SetGravityState(GravityState.Left);
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            currentGravity = EGravityState.Right;
             currentGravityDir = Vector2.right;
+            GameManager.Inst.SetGravityState(GravityState.Right);
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            currentGravity = EGravityState.Down;
             currentGravityDir = Vector2.down;
+            GameManager.Inst.SetGravityState(GravityState.Down);
         }
 
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            currentGravity = EGravityState.Up;
             currentGravityDir = Vector2.up;
+            GameManager.Inst.SetGravityState(GravityState.Up);
         }
 
-        zRotate = GetZRotate();
+        zRotate = GameManager.Inst.GetZRotate();
 
         transform.rotation = Quaternion.Euler(0f, 0f, zRotate);
     }
@@ -110,23 +98,5 @@ public class Player : MonoBehaviour
     void Gravity()
     {
         body.AddForce(currentGravityDir * 9.8f);
-    }
-
-    float GetZRotate()
-    {
-        switch(currentGravity)
-        {
-            case EGravityState.Left:
-                return -90f;
-            case EGravityState.Right:
-                return 90f;
-            case EGravityState.Down:
-                return 0f;
-            case EGravityState.Up:
-                return 180f;
-
-            default:
-                return 0f;
-        }
     }
 }
