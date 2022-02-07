@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class Player : MonoBehaviour
 { 
@@ -71,23 +72,27 @@ public class Player : MonoBehaviour
         {
             currentGravityDir = Vector2.left;
             GameManager.Inst.SetGravityState(GravityState.Left);
+            RotatePlayer();
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             currentGravityDir = Vector2.right;
             GameManager.Inst.SetGravityState(GravityState.Right);
+            RotatePlayer();
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             currentGravityDir = Vector2.down;
             GameManager.Inst.SetGravityState(GravityState.Down);
+            RotatePlayer();
         }
 
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             currentGravityDir = Vector2.up;
             GameManager.Inst.SetGravityState(GravityState.Up);
+            RotatePlayer();
         }
 
         zRotate = GameManager.Inst.GetZRotate();
@@ -98,5 +103,14 @@ public class Player : MonoBehaviour
     void Gravity()
     {
         body.AddForce(currentGravityDir * 9.8f);
+    }
+
+    private void RotatePlayer()
+    {
+        Vector3 rot = Vector3.zero;
+
+        rot.z = GameManager.Inst.GetZRotate();
+
+        transform.DORotate(rot, 1f);
     }
 }
