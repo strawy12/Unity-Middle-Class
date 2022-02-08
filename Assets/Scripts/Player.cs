@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Player : MonoBehaviour
 { 
@@ -12,21 +13,37 @@ public class Player : MonoBehaviour
 
     Rigidbody2D body; // 컴포넌트에서 RigidBody를 받아올 변수
 
-    private bool isGround = true;
+    [SerializeField] private bool isGround = true;
+    [SerializeField] private GameObject player = null;
+
+    private Tilemap tilemap;
 
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
         //GetComponent를 활용하여 body에 해당 오브젝트의 Rigidbody를 넣어준다. 
         currentGravityDir = Vector2.down;
+        EventManager.StartListening("CHANGEGRAVITYSTATE", Rotation);
+        tilemap = GetComponent<Tilemap>();
     }
 
     void FixedUpdate()
     {
         Move();
         Jump();
-        Rotation();
         Gravity();
+        DetectedRayCast();
+    }
+
+    RaycastHit hit;
+    public float maxDistance = 5f;
+
+
+    void DetectedRayCast()
+    {
+        Physics2D.Raycast(transform.position, Vector2.up, maxDistance);
+
+        Debug.DrawRay(transform.position, Vector2.up * maxDistance, Color.red);
     }
 
     void Move() 
@@ -55,44 +72,23 @@ public class Player : MonoBehaviour
         }
     }
 
+    void Rotation()
+    {
+        float zRotate = 0f;
+
+        zRotate = GameManager.Inst.GetZRotate();
+
+        transform.rotation = Quaternion.Euler(0f, 0f, zRotate);
+
+        currentGravityDir = GameManager.Inst.GetGravityDirection();
+    }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Square"))
         { 
             isGround = true;
         }
-    }
-
-    void Rotation()
-    {
-        float zRotate = 0f;
-
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            currentGravityDir = Vector2.left;
-            GameManager.Inst.SetGravityState(GravityState.Left);
-        }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            currentGravityDir = Vector2.right;
-            GameManager.Inst.SetGravityState(GravityState.Right);
-        }
-
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            currentGravityDir = Vector2.down;
-            GameManager.Inst.SetGravityState(GravityState.Down);
-        }
-
-        if (Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            currentGravityDir = Vector2.up;
-            GameManager.Inst.SetGravityState(GravityState.Up);
-        }
-
-        zRotate = GameManager.Inst.GetZRotate();
-
-        transform.rotation = Quaternion.Euler(0f, 0f, zRotate);
     }
 
     void Gravity()
