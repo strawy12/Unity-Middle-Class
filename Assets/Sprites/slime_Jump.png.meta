@@ -32,18 +32,6 @@ TextureImporter:
   - first:
       213: -3893646207831369233
     second: slime_Jump_9
-  - first:
-      213: -3351478391634507322
-    second: slime_Jump_10
-  - first:
-      213: 6683665010037821749
-    second: slime_Jump_11
-  - first:
-      213: -9221945620558413098
-    second: slime_Jump_12
-  - first:
-      213: -8871621562455550730
-    second: slime_Jump_13
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -88,7 +76,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 50
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -150,8 +138,8 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 28
-        height: 28
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -169,10 +157,10 @@ TextureImporter:
       name: slime_Jump_1
       rect:
         serializedVersion: 2
-        x: 28
+        x: 32
         y: 0
-        width: 28
-        height: 28
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -190,10 +178,10 @@ TextureImporter:
       name: slime_Jump_2
       rect:
         serializedVersion: 2
-        x: 56
+        x: 64
         y: 0
-        width: 28
-        height: 28
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -211,10 +199,10 @@ TextureImporter:
       name: slime_Jump_3
       rect:
         serializedVersion: 2
-        x: 84
+        x: 96
         y: 0
-        width: 28
-        height: 28
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -232,10 +220,10 @@ TextureImporter:
       name: slime_Jump_4
       rect:
         serializedVersion: 2
-        x: 112
+        x: 128
         y: 0
-        width: 28
-        height: 28
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -253,10 +241,10 @@ TextureImporter:
       name: slime_Jump_5
       rect:
         serializedVersion: 2
-        x: 140
+        x: 160
         y: 0
-        width: 28
-        height: 28
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -274,10 +262,10 @@ TextureImporter:
       name: slime_Jump_6
       rect:
         serializedVersion: 2
-        x: 168
+        x: 192
         y: 0
-        width: 28
-        height: 28
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -295,10 +283,10 @@ TextureImporter:
       name: slime_Jump_7
       rect:
         serializedVersion: 2
-        x: 196
+        x: 224
         y: 0
-        width: 28
-        height: 28
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -316,10 +304,10 @@ TextureImporter:
       name: slime_Jump_8
       rect:
         serializedVersion: 2
-        x: 224
+        x: 256
         y: 0
-        width: 28
-        height: 28
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -337,10 +325,10 @@ TextureImporter:
       name: slime_Jump_9
       rect:
         serializedVersion: 2
-        x: 252
+        x: 288
         y: 0
-        width: 28
-        height: 28
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -350,90 +338,6 @@ TextureImporter:
       bones: []
       spriteID: fe91a25476df6f9c0800000000000000
       internalID: -3893646207831369233
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: slime_Jump_10
-      rect:
-        serializedVersion: 2
-        x: 280
-        y: 0
-        width: 28
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6c94a32e8282d71d0800000000000000
-      internalID: -3351478391634507322
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: slime_Jump_11
-      rect:
-        serializedVersion: 2
-        x: 308
-        y: 0
-        width: 28
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 53113014ae521cc50800000000000000
-      internalID: 6683665010037821749
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: slime_Jump_12
-      rect:
-        serializedVersion: 2
-        x: 336
-        y: 0
-        width: 28
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6d285ac6151150080800000000000000
-      internalID: -9221945620558413098
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: slime_Jump_13
-      rect:
-        serializedVersion: 2
-        x: 364
-        y: 0
-        width: 28
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6f4142c513ba1e480800000000000000
-      internalID: -8871621562455550730
       vertices: []
       indices: 
       edges: []
