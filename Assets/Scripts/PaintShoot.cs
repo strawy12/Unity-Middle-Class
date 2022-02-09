@@ -17,29 +17,31 @@ public class PaintShoot : MonoBehaviour
     private Tile[] paintTile;
     [SerializeField]
     private Tilemap paintTileMap;
+    [SerializeField]
+    private GameObject bullet;
+    [SerializeField]
+    private Transform bulletPosition;
 
+    private Animator animator;
+    private bool isShoot = false;
     public int Remaining; //남은 개수
     int tileX, tileY;
     void Start()
     {
         line = GetComponent<LineRenderer>();
+        animator = GetComponent<Animator>();
     }
     void Update()
     {
         mouseP = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        targetPos.y = mouseP.y - transform.position.y;
-        targetPos.x = mouseP.x - transform.position.x;
-        targetDir = targetPos.normalized;
+        SetTargetPos();
+        SetHitPos();
         TargetMouse();
         hit = Physics2D.Raycast(transform.position, targetDir, 999f, LayerMask.GetMask("Block"));
         Debug.DrawRay(transform.position, targetDir * 999, Color.red);
-        Vector3 hitPos = hit.point;
-        hitPos += (Vector3)targetDir* 0.01f;
-        tileX = GameManager.Inst.tileMap.WorldToCell(hitPos).x;
-        tileY = GameManager.Inst.tileMap.WorldToCell(hitPos).y;
+ 
 
         v3Int = new Vector3Int(tileX, tileY, 0);
-      
     }
     public void TargetMouse()
     {
@@ -59,50 +61,67 @@ public class PaintShoot : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+           
             if (hit.collider != null)
             {
                 if (Remaining > 0)
                 {
+                    //isShoot = true;
+                    animator.Play("Slime Shoot");
+                    FirePaint();
                     Remaining--;
-                    shootDir = new Vector3(hit.point.x - (v3Int.x + 0.5f), hit.point.y - (v3Int.y + 0.5f)).normalized;
-                    if (Mathf.Abs(shootDir.x) == Mathf.Abs(shootDir.y)) { Debug.Log("return"); return; }
-                    ShootDir();
-                    GameManager.Inst.tileMap.RefreshAllTiles();
-
-                    //타일 색 바꿀 때 이게 있어야 하더군요
-                    //GameManager.Inst.tileMap.SetTileFlags(v3Int, TileFlags.None);
-                    //타일 색 바꾸기
-                    //GameManager.Inst.tileMap.SetColor(v3Int, (Color.red));
-                    GameManager.Inst.SetPaintBlock(v3Int.x, v3Int.y, true);
-                    Debug.Log(v3Int);
                 }
             }
         }
     }
-    public void ShootDir()
+    public void ShootDir(Vector3 hitP, Vector3Int v3I)
     {
-       
+        shootDir = new Vector3(hitP.x - (v3I.x + 0.5f), hitP.y - (v3I.y + 0.5f)).normalized;
+        GameManager.Inst.SetPaintBlock(v3I.x, v3I.y, true);
         if (Mathf.Abs(shootDir.x) < Mathf.Abs(shootDir.y))
         {
-            if (hit.point.y > v3Int.y + 0.5)
+            if (hitP.y > v3I.y + 0.5)
             {
-                paintTileMap.SetTile(v3Int, paintTile[2]);
+            
+                paintTileMap.SetTile(v3I, paintTile[2]);
             }
-            if (hit.point.y < v3Int.y + 0.5)
+            if (hitP.y < v3I.y + 0.5)
             {
-                paintTileMap.SetTile(v3Int, paintTile[3]);
+                paintTileMap.SetTile(v3I, paintTile[3]);
             }
         }
         else
         {
-            if (hit.point.x > v3Int.x + 0.5)
+            if (hitP.x > v3I.x + 0.5)
             {
-                paintTileMap.SetTile(v3Int, paintTile[1]);
+                paintTileMap.SetTile(v3I, paintTile[1]);
             }
-            if (hit.point.x < v3Int.x + 0.5)
+            if (hitP.x < v3I.x + 0.5)
             {
-                paintTileMap.SetTile(v3Int, paintTile[0]);
+                paintTileMap.SetTile(v3I, paintTile[0]);
             }
         }
+        //isShoot = false;
+    }
+    public void FirePaint()
+    {
+        float angle = Mathf.Atan2(mouseP.y - transform.position.y, mouseP.x - transform.position.x) * Mathf.Rad2Deg;
+        GameObject newBullet= Instantiate(bullet, bulletPosition);
+        newBullet.GetComponent<BulletMove>().SetVariable(hit.point, v3Int);
+        newBullet.transform.SetParent(null);
+        newBullet.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+    }
+    public void SetTargetPos()
+    {
+        targetPos.y = mouseP.y - transform.position.y;
+        targetPos.x = mouseP.x - transform.position.x;
+        targetDir = targetPos.normalized;
+    } 
+    public void SetHitPos()
+    {
+        Vector3 hitPos = hit.point;
+        hitPos += (Vector3)targetDir * 0.01f;
+        tileX = GameManager.Inst.tileMap.WorldToCell(hitPos).x;
+        tileY = GameManager.Inst.tileMap.WorldToCell(hitPos).y;
     }
 }
