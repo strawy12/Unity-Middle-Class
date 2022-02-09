@@ -55,8 +55,6 @@ public class PaintShoot : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("hit:" + hit.point);
-            Debug.Log("v3Int:" + v3Int);
             if (hit.collider != null)
             {
                 if (Remaining > 0)
@@ -82,22 +80,22 @@ public class PaintShoot : MonoBehaviour
         {
             if (hit.point.y > v3Int.y + 0.5)
             {
-                Debug.Log("up");
+                //Debug.Log("up");
             }
             if (hit.point.y < v3Int.y + 0.5)
             {
-                Debug.Log("down");
+                //Debug.Log("down");
             }
         }
         else
         {
             if (hit.point.x > v3Int.x + 0.5)
             {
-                Debug.Log("right");
+                //Debug.Log("right");
             }
             if (hit.point.x < v3Int.x + 0.5)
             {
-                Debug.Log("left");
+                //Debug.Log("left");
             }
         }
     }
