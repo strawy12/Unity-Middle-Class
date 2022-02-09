@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Player : MonoBehaviour
 { 
@@ -10,14 +11,15 @@ public class Player : MonoBehaviour
     public float rotateSpeed = 10.0f;
     public float jumpForce = 1.0f; // 점프하는 힘
 
-    Rigidbody2D body; // 컴포넌트에서 RigidBody를 받아올 변수
+    Rigidbody2D body; 
+    [SerializeField] private bool isGround = true;
 
-    private bool isGround = true;
+
+    [SerializeField] private Tilemap tilemap;
 
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
-        //GetComponent를 활용하여 body에 해당 오브젝트의 Rigidbody를 넣어준다. 
         currentGravityDir = Vector2.down;
     }
 
@@ -25,8 +27,8 @@ public class Player : MonoBehaviour
     {
         Move();
         Jump();
-        Rotation();
         Gravity();
+        DetectedRaycast();
     }
 
     void Move() 
@@ -60,6 +62,33 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Square"))
         { 
             isGround = true;
+        }
+    }
+
+    public float maxDistance = 3f;
+
+    void DetectedRaycast()
+    {
+        RaycastHit2D upHit = Physics2D.Raycast(transform.position, Vector2.up, maxDistance);
+        RaycastHit2D downHit = Physics2D.Raycast(transform.position, Vector2.down, maxDistance);
+        RaycastHit2D leftHit = Physics2D.Raycast(transform.position, Vector2.left, maxDistance);
+        RaycastHit2D rightHit = Physics2D.Raycast(transform.position, Vector2.right, maxDistance);
+
+        Debug.DrawRay(transform.position, Vector2.up * maxDistance, Color.red);
+        Debug.DrawRay(transform.position, Vector2.down * maxDistance, Color.red);
+        Debug.DrawRay(transform.position, Vector2.left * maxDistance, Color.red);
+        Debug.DrawRay(transform.position, Vector2.right * maxDistance, Color.red);
+
+        int x = tilemap.WorldToCell(upHit.point).x;
+        int y = tilemap.WorldToCell(upHit.point).y;
+
+        Vector3Int tilepos = new Vector3Int(x, y, 0);
+
+        //Debug.Log("gi : " + tilepos);
+
+        if (tilemap.GetColor(tilepos) == Color.black)
+        {
+            Debug.Log("gi : " + tilepos);
         }
     }
 

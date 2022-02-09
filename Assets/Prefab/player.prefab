@@ -146,4 +146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1
   rotateSpeed: 10
-  jumpForce: 1
+  jumpForce: 5
+  isGround: 1
+  tilemap: {fileID: 0}
+  maxDistance: 3
