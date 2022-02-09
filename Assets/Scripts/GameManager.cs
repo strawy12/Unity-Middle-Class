@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 public class GameManager : MonoSingleTon<GameManager>
 {
     private GravityState gameGravityState;
-
+    public GameState gameState { get; private set; }
     public Vector3Int playerTilePos;
 
     public Tilemap tileMap;
@@ -15,13 +15,17 @@ public class GameManager : MonoSingleTon<GameManager>
 
     void Start()
     {
+        SetGameState(GameState.Start);
         gameGravityState = GravityState.Down;
         int x = tileMap.cellBounds.size.x;
         int y = tileMap.cellBounds.size.y;
         tilemapInfoArray = new bool[x, y];
     }
 
-
+    public void SetGameState(GameState state)
+    {
+        gameState = state;  
+    }
     public void SetGravityState(GravityState state)
     {
         gameGravityState = state;
