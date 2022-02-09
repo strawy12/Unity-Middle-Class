@@ -59,4 +59,22 @@ public class GameManager : MonoSingleTon<GameManager>
                 return Vector2.down;
         }
     }
+
+    public Vector2 GetGravityDirection(GravityState state)
+    {
+        switch (state)
+        {
+            case GravityState.Left:
+                return Vector2.left;
+            case GravityState.Right:
+                return Vector2.right;
+            case GravityState.Down:
+                return Vector2.down;
+            case GravityState.Up:
+                return Vector2.up;
+
+            default:
+                return Vector2.down;
+        }
+    }
 }

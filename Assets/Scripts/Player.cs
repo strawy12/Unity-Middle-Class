@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public float speed;
     public float rotateSpeed = 10.0f;
     public float jumpForce = 1.0f; // 점프하는 힘
+    public float maxDistance = 5f;
 
     Rigidbody2D body; // 컴포넌트에서 RigidBody를 받아올 변수
 
@@ -17,12 +18,14 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject player;
 
     [SerializeField] private Tilemap tilemap;
+    private List<RaycastData> raycastDataList;
 
     private Vector3Int CurrentTilePos { get { return tilemap.WorldToCell(transform.position); } }
 
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
+        InitiateRaycastDataList();
         //GetComponent를 활용하여 body에 해당 오브젝트의 Rigidbody를 넣어준다. 
         currentGravityDir = Vector2.down;
         EventManager.StartListening("CHANGEGRAVITYSTATE", Rotation);
@@ -30,49 +33,112 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        Move();
-        Jump();
-        Gravity();
         DetectedRaycast();
     }
 
+    private void Update()
+    {
+        Move();
+        Jump();
+        Gravity();
+    }
 
-    public float maxDistance = 5f;
+
+
+    private void InitiateRaycastDataList()
+    {
+        raycastDataList = new List<RaycastData>();
+
+        for (int index = 0; index < (int)GravityState.Count; index++)
+        {
+            raycastDataList.Add(new RaycastData((GravityState)index));
+        }
+    }
 
     void DetectedRaycast()
     {
-        float maxDistance = 999f;
+        GravityState priorityType = GravityState.None;
+        float minDistance = 999f;
         float distance;
+        for (int index = 0; index < (int)GravityState.Count; index++)
+        {
+            if (CheckDetectRaycast((GravityState)index))
+            {
 
-        RaycastHit2D upHit = Physics2D.Raycast(transform.position, Vector2.up, maxDistance, LayerMask.GetMask("Gravity"));
-        RaycastHit2D downHit = Physics2D.Raycast(transform.position, Vector2.down, maxDistance, LayerMask.GetMask("Gravity"));
-        RaycastHit2D leftHit = Physics2D.Raycast(transform.position, Vector2.left, maxDistance, LayerMask.GetMask("Gravity"));
-        RaycastHit2D rightHit = Physics2D.Raycast(transform.position, Vector2.right, maxDistance, LayerMask.GetMask("Gravity"));
+                distance = raycastDataList[index].detectDistance;
 
-        GravityPosDistance(upHit, GravityState.Up);
-        GravityPosDistance(downHit, GravityState.Down);
-        GravityPosDistance(leftHit, GravityState.Left);
-        GravityPosDistance(rightHit, GravityState.Right);
+                if (distance < minDistance)
+                {
+                    priorityType = (GravityState)index;
+                    minDistance = distance;
+                }
 
-        //Debug.DrawRay(transform.position, Vector2.up * maxDistance, Color.red);
-        //Debug.DrawRay(transform.position, Vector2.down * maxDistance, Color.red);
-        //Debug.DrawRay(transform.position, Vector2.left * maxDistance, Color.red);
-        //Debug.DrawRay(transform.position, Vector2.right * maxDistance, Color.red);
+                //else if(distance == minDistance)
+                //{
+                //    if(index < (int)priorityType)
+                //    {
+                //        priorityType = (GravityState)index;
+                //        // for문이라 작은거부터 큰거로 비교해가지고
+                //    }
+                //}
+            }
+        }
+
+        if(priorityType != GravityState.None)
+        {
+            GameManager.Inst.SetGravityState(priorityType);
+        }
+        else
+        {
+            GameManager.Inst.SetGravityState(GravityState.Down);
+        }
+
+
     }
 
-    float GravityPosDistance(RaycastHit2D detectedRay, GravityState detectType)
+    private bool CheckDetectRaycast(GravityState state)
     {
-        int x = tilemap.WorldToCell(detectedRay.point).x;
-        int y = tilemap.WorldToCell(detectedRay.point).y;
+        Vector2 direction = GameManager.Inst.GetGravityDirection(state);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, maxDistance, LayerMask.GetMask("Gravity"));
+        Debug.DrawRay(transform.position, direction * maxDistance, Color.red);
+        Vector3Int tilepos = Vector3Int.zero;
+        RaycastData raycastData = raycastDataList.Find((data) => data.detectType == state);
+        //raycastData = raycastDataList[(int)state];
 
-        Vector3Int tilepos = new Vector3Int(x, y, 0);
+
+        if (!hit)
+        {
+            raycastData.isdetected = false;
+            raycastData.detectDistance = 0f;
+            
+            return false;
+        }
+
+        Vector3 hitPos = hit.point;
+        hitPos += (Vector3)direction * 0.01f;
+
+        int x = tilemap.WorldToCell(hitPos).x;
+        int y = tilemap.WorldToCell(hitPos).y;
+
+        tilepos.x = x;
+        tilepos.y = y;
+
 
         if (tilemap.GetColor(tilepos) == Color.red)
         {
-            GameManager.Inst.SetGravityState(detectType);
+            raycastData.isdetected = true;
+            raycastData.detectDistance = Vector3Int.Distance(tilepos, CurrentTilePos);
+            
+            return true;
         }
 
-        return Vector3Int.Distance(tilepos, CurrentTilePos);
+        else
+        {
+            raycastData.isdetected = false;
+            raycastData.detectDistance = 0f;
+
+            return false;
+        }
     }
 
     void Move()
