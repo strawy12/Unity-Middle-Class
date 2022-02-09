@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Tilemap tilemap;
 
+    private Vector3Int CurrentTilePos { get { return tilemap.WorldToCell(transform.position); } }
+
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
@@ -39,37 +41,38 @@ public class Player : MonoBehaviour
 
     void DetectedRaycast()
     {
+        float maxDistance = 999f;
+        float distance;
+
         RaycastHit2D upHit = Physics2D.Raycast(transform.position, Vector2.up, maxDistance, LayerMask.GetMask("Gravity"));
         RaycastHit2D downHit = Physics2D.Raycast(transform.position, Vector2.down, maxDistance, LayerMask.GetMask("Gravity"));
         RaycastHit2D leftHit = Physics2D.Raycast(transform.position, Vector2.left, maxDistance, LayerMask.GetMask("Gravity"));
         RaycastHit2D rightHit = Physics2D.Raycast(transform.position, Vector2.right, maxDistance, LayerMask.GetMask("Gravity"));
 
-        Debug.DrawRay(transform.position, Vector2.up * maxDistance, Color.red);
-        Debug.DrawRay(transform.position, Vector2.down * maxDistance, Color.red);
-        Debug.DrawRay(transform.position, Vector2.left * maxDistance, Color.red);
-        Debug.DrawRay(transform.position, Vector2.right * maxDistance, Color.red);
+        GravityPosDistance(upHit, GravityState.Up);
+        GravityPosDistance(downHit, GravityState.Down);
+        GravityPosDistance(leftHit, GravityState.Left);
+        GravityPosDistance(rightHit, GravityState.Right);
 
-        GravityPosColor(upHit, GravityState.Up);
-        GravityPosColor(downHit, GravityState.Down);
-        GravityPosColor(leftHit, GravityState.Left);
-        GravityPosColor(rightHit, GravityState.Right);
+        //Debug.DrawRay(transform.position, Vector2.up * maxDistance, Color.red);
+        //Debug.DrawRay(transform.position, Vector2.down * maxDistance, Color.red);
+        //Debug.DrawRay(transform.position, Vector2.left * maxDistance, Color.red);
+        //Debug.DrawRay(transform.position, Vector2.right * maxDistance, Color.red);
     }
 
-    Vector3Int GravityPosColor(RaycastHit2D detectedRay, GravityState detectType)
+    float GravityPosDistance(RaycastHit2D detectedRay, GravityState detectType)
     {
         int x = tilemap.WorldToCell(detectedRay.point).x;
         int y = tilemap.WorldToCell(detectedRay.point).y;
 
         Vector3Int tilepos = new Vector3Int(x, y, 0);
 
-        Debug.Log(tilepos);
-
         if (tilemap.GetColor(tilepos) == Color.red)
         {
             GameManager.Inst.SetGravityState(detectType);
         }
 
-        return tilepos;
+        return Vector3Int.Distance(tilepos, CurrentTilePos);
     }
 
     void Move()
