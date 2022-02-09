@@ -23,6 +23,7 @@ public class UIManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 escMenu.SetActive(true);
+                GameManager.Inst.SetGameState(GameState.Stop);
                 isEsc = true;
             }
         }
@@ -42,6 +43,7 @@ public class UIManager : MonoBehaviour
         isEsc = false;
         escMenu.SetActive(false);
         Time.timeScale = 1;
+        GameManager.Inst.SetGameState(GameState.Start);
     }
     public void OnClickSetting()
     {

@@ -37,9 +37,12 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        Move();
-        Jump();
-        Gravity();
+        if (GameManager.Inst.gameState == GameState.Start)
+        {
+            Move();
+            Jump();
+            Gravity();
+        }
     }
 
 

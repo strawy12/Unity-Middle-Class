@@ -13,6 +13,10 @@ public class PaintShoot : MonoBehaviour
     private Vector3Int v3Int;
     private RaycastHit2D hit;
     private Vector3 shootDir;
+    [SerializeField]
+    private Tile[] paintTile;
+    [SerializeField]
+    private Tilemap paintTileMap;
 
     public int Remaining; //남은 개수
     int tileX, tileY;
@@ -66,10 +70,9 @@ public class PaintShoot : MonoBehaviour
                     GameManager.Inst.tileMap.RefreshAllTiles();
 
                     //타일 색 바꿀 때 이게 있어야 하더군요
-                    GameManager.Inst.tileMap.SetTileFlags(v3Int, TileFlags.None);
+                    //GameManager.Inst.tileMap.SetTileFlags(v3Int, TileFlags.None);
                     //타일 색 바꾸기
-                    GameManager.Inst.tileMap.SetColor(v3Int, (Color.red));
-
+                    //GameManager.Inst.tileMap.SetColor(v3Int, (Color.red));
                     GameManager.Inst.SetPaintBlock(v3Int.x, v3Int.y, true);
                     Debug.Log(v3Int);
                 }
@@ -83,22 +86,22 @@ public class PaintShoot : MonoBehaviour
         {
             if (hit.point.y > v3Int.y + 0.5)
             {
-                //Debug.Log("up");
+                paintTileMap.SetTile(v3Int, paintTile[2]);
             }
             if (hit.point.y < v3Int.y + 0.5)
             {
-                //Debug.Log("down");
+                paintTileMap.SetTile(v3Int, paintTile[3]);
             }
         }
         else
         {
             if (hit.point.x > v3Int.x + 0.5)
             {
-                //Debug.Log("right");
+                paintTileMap.SetTile(v3Int, paintTile[1]);
             }
             if (hit.point.x < v3Int.x + 0.5)
             {
-                //Debug.Log("left");
+                paintTileMap.SetTile(v3Int, paintTile[0]);
             }
         }
     }
