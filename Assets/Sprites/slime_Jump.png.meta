@@ -1,19 +1,37 @@
 fileFormatVersion: 2
-guid: d2dcf51af0068c24b85e0d383ecf22e8
+guid: 82325803bf5737b40a3408dbc08c4718
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5741912943891283644
-    second: slime_Idle_0
+      213: -2297056406473789561
+    second: slime_Jump_0
   - first:
-      213: -5062876598410355898
-    second: slime_Idle_1
+      213: 5865521659713201913
+    second: slime_Jump_1
   - first:
-      213: -4070796561687270758
-    second: slime_Idle_2
+      213: 531642746776108701
+    second: slime_Jump_2
   - first:
-      213: -7166736953319595459
-    second: slime_Idle_3
+      213: -5423768006092144866
+    second: slime_Jump_3
+  - first:
+      213: -5575226885116471899
+    second: slime_Jump_4
+  - first:
+      213: 8847223233516544284
+    second: slime_Jump_5
+  - first:
+      213: 4258952396256176604
+    second: slime_Jump_6
+  - first:
+      213: -189222377141854156
+    second: slime_Jump_7
+  - first:
+      213: -8684637347209896981
+    second: slime_Jump_8
+  - first:
+      213: -3893646207831369233
+    second: slime_Jump_9
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -115,7 +133,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: slime_Idle_0
+      name: slime_Jump_0
       rect:
         serializedVersion: 2
         x: 0
@@ -129,14 +147,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 44184287990a050b0800000000000000
-      internalID: -5741912943891283644
+      spriteID: 78f281f5e573f10e0800000000000000
+      internalID: -2297056406473789561
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: slime_Idle_1
+      name: slime_Jump_1
       rect:
         serializedVersion: 2
         x: 32
@@ -150,14 +168,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 64bdc1ade8c0db9b0800000000000000
-      internalID: -5062876598410355898
+      spriteID: 9f6a0956fd4866150800000000000000
+      internalID: 5865521659713201913
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: slime_Idle_2
+      name: slime_Jump_2
       rect:
         serializedVersion: 2
         x: 64
@@ -171,14 +189,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a9aafbb5810a187c0800000000000000
-      internalID: -4070796561687270758
+      spriteID: d9eb00de246c06700800000000000000
+      internalID: 531642746776108701
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: slime_Idle_3
+      name: slime_Jump_3
       rect:
         serializedVersion: 2
         x: 96
@@ -192,8 +210,134 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d3268b246b2aa8c90800000000000000
-      internalID: -7166736953319595459
+      spriteID: e1fbfbc1cb7eab4b0800000000000000
+      internalID: -5423768006092144866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slime_Jump_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a5dc62dfa0d0a2b0800000000000000
+      internalID: -5575226885116471899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slime_Jump_5
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c11265208a6a7ca70800000000000000
+      internalID: 8847223233516544284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slime_Jump_6
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd9e526b3a6da1b30800000000000000
+      internalID: 4258952396256176604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slime_Jump_7
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 430a7e2204fbf5df0800000000000000
+      internalID: -189222377141854156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slime_Jump_8
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: beb967c8858f97780800000000000000
+      internalID: -8684637347209896981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: slime_Jump_9
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe91a25476df6f9c0800000000000000
+      internalID: -3893646207831369233
       vertices: []
       indices: 
       edges: []
