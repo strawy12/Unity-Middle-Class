@@ -10,7 +10,7 @@ public class GameManager : MonoSingleTon<GameManager>
 
     public Vector3Int playerTilePos;
 
-    [SerializeField] public Tilemap tileMap;
+    public Tilemap tileMap;
     private bool[,] tilemapInfoArray;
 
     void Start()
@@ -64,7 +64,24 @@ public class GameManager : MonoSingleTon<GameManager>
         }
     }
 
-<<<<<<< HEAD
+    public Vector2 GetGravityDirection(GravityState state)
+    {
+        switch (state)
+        {
+            case GravityState.Left:
+                return Vector2.left;
+            case GravityState.Right:
+                return Vector2.right;
+            case GravityState.Down:
+                return Vector2.down;
+            case GravityState.Up:
+                return Vector2.up;
+
+            default:
+                return Vector2.down;
+        }
+    }
+
     public bool PaintBlockCheck(int x, int y)
     {
         x = ConversionToTilemapGridPos(x, true);
@@ -84,23 +101,6 @@ public class GameManager : MonoSingleTon<GameManager>
     public int ConversionToTilemapGridPos(int pos, bool isPosX)
     {
         return pos + Mathf.Abs(isPosX ? tileMap.cellBounds.xMin : tileMap.cellBounds.yMin);
-=======
-    public Vector2 GetGravityDirection(GravityState state)
-    {
-        switch (state)
-        {
-            case GravityState.Left:
-                return Vector2.left;
-            case GravityState.Right:
-                return Vector2.right;
-            case GravityState.Down:
-                return Vector2.down;
-            case GravityState.Up:
-                return Vector2.up;
 
-            default:
-                return Vector2.down;
-        }
->>>>>>> kimyujin
     }
 }

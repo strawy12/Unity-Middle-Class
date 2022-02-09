@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 public class PaintShoot : MonoBehaviour
 {
     private LineRenderer line;
-    public Tilemap tilemap;
+
     private Vector2 mouseP;
     private Vector2 targetPos;
     private Vector2 targetDir;
@@ -31,8 +31,8 @@ public class PaintShoot : MonoBehaviour
         Debug.DrawRay(transform.position, targetDir * 999, Color.red);
         Vector3 hitPos = hit.point;
         hitPos += (Vector3)targetDir* 0.01f;
-        tileX = this.tilemap.WorldToCell(hitPos).x;
-        tileY = this.tilemap.WorldToCell(hitPos).y;
+        tileX = GameManager.Inst.tileMap.WorldToCell(hitPos).x;
+        tileY = GameManager.Inst.tileMap.WorldToCell(hitPos).y;
 
         v3Int = new Vector3Int(tileX, tileY, 0);
       
@@ -63,16 +63,17 @@ public class PaintShoot : MonoBehaviour
                     shootDir = new Vector3(hit.point.x - (v3Int.x + 0.5f), hit.point.y - (v3Int.y + 0.5f)).normalized;
                     if (Mathf.Abs(shootDir.x) == Mathf.Abs(shootDir.y)) { Debug.Log("return"); return; }
                     ShootDir();
-                    tilemap.RefreshAllTiles();
+                    GameManager.Inst.tileMap.RefreshAllTiles();
 
                     //타일 색 바꿀 때 이게 있어야 하더군요
-                    this.tilemap.SetTileFlags(v3Int, TileFlags.None);
+                    GameManager.Inst.tileMap.SetTileFlags(v3Int, TileFlags.None);
                     //타일 색 바꾸기
-                    this.tilemap.SetColor(v3Int, (Color.red));
+                    GameManager.Inst.tileMap.SetColor(v3Int, (Color.red));
+
+                    GameManager.Inst.SetPaintBlock(v3Int.x, v3Int.y, true);
+                    Debug.Log(v3Int);
                 }
-
             }
-
         }
     }
     public void ShootDir()

@@ -17,10 +17,9 @@ public class Player : MonoBehaviour
     [SerializeField] private bool isGround = true;
     [SerializeField] private GameObject player;
 
-    [SerializeField] private Tilemap tilemap;
     private List<RaycastData> raycastDataList;
 
-    private Vector3Int CurrentTilePos { get { return tilemap.WorldToCell(transform.position); } }
+    private Vector3Int CurrentTilePos { get { return GameManager.Inst.tileMap.WorldToCell(transform.position); } }
 
     void Start()
     {
@@ -99,7 +98,7 @@ public class Player : MonoBehaviour
     private bool CheckDetectRaycast(GravityState state)
     {
         Vector2 direction = GameManager.Inst.GetGravityDirection(state);
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, maxDistance, LayerMask.GetMask("Gravity"));
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, maxDistance, LayerMask.GetMask("Block"));
         Debug.DrawRay(transform.position, direction * maxDistance, Color.red);
         Vector3Int tilepos = Vector3Int.zero;
         RaycastData raycastData = raycastDataList.Find((data) => data.detectType == state);
@@ -117,14 +116,15 @@ public class Player : MonoBehaviour
         Vector3 hitPos = hit.point;
         hitPos += (Vector3)direction * 0.01f;
 
-        int x = tilemap.WorldToCell(hitPos).x;
-        int y = tilemap.WorldToCell(hitPos).y;
+        int x = GameManager.Inst.tileMap.WorldToCell(hitPos).x;
+        int y = GameManager.Inst.tileMap.WorldToCell(hitPos).y;
 
         tilepos.x = x;
         tilepos.y = y;
 
+        Debug.Log("tile" + tilepos);
 
-        if (tilemap.GetColor(tilepos) == Color.red)
+        if (GameManager.Inst.PaintBlockCheck(tilepos.x, tilepos.y))
         {
             raycastData.isdetected = true;
             raycastData.detectDistance = Vector3Int.Distance(tilepos, CurrentTilePos);
