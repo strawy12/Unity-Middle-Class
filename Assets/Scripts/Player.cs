@@ -6,8 +6,10 @@ using UnityEngine.Tilemaps;
 public class Player : MonoBehaviour
 {
     private Vector2 currentGravityDir;
+    private GravityState currentGravityState;
 
     public float speed;
+    public bool isdd;
     public float rotateSpeed = 10.0f;
     public float jumpForce = 1.0f; // 점프하는 힘
     public float maxDistance = 5f;
@@ -24,10 +26,10 @@ public class Player : MonoBehaviour
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
+        currentGravityState = GravityState.Down;
         InitiateRaycastDataList();
         //GetComponent를 활용하여 body에 해당 오브젝트의 Rigidbody를 넣어준다. 
         currentGravityDir = Vector2.down;
-        EventManager.StartListening("CHANGEGRAVITYSTATE", Rotation);
     }
 
     void FixedUpdate()
@@ -86,13 +88,20 @@ public class Player : MonoBehaviour
             }
         }
 
-        if(priorityType != GravityState.None)
+        if (priorityType != GravityState.None)
         {
-            GameManager.Inst.SetGravityState(priorityType);
+            if (currentGravityState != priorityType)
+            {
+                Debug.Log(priorityType);
+                currentGravityState = priorityType;
+                Rotation();
+                //body.velocity = Vector2.zero;
+            }
         }
         else
         {
-            GameManager.Inst.SetGravityState(GravityState.Down);
+            currentGravityState = GravityState.Down;
+            Rotation();
         }
 
 
@@ -112,7 +121,7 @@ public class Player : MonoBehaviour
         {
             raycastData.isdetected = false;
             raycastData.detectDistance = 0f;
-            
+
             return false;
         }
 
@@ -129,7 +138,7 @@ public class Player : MonoBehaviour
         {
             raycastData.isdetected = true;
             raycastData.detectDistance = Vector3Int.Distance(tilepos, CurrentTilePos);
-            
+
             return true;
         }
 
@@ -144,11 +153,61 @@ public class Player : MonoBehaviour
 
     void Move()
     {
-        float moveX = Input.GetAxis("Horizontal");
-        
-        float xSpeed = moveX * speed;
+        float moveDirValue = 0f;
+        switch (currentGravityState)
+        {
+            case GravityState.Down:
+            case GravityState.Up:
+                moveDirValue = HorizontalMove();
+                break;
 
-        transform.Translate(new Vector2(xSpeed, 0f) * Time.deltaTime);
+            case GravityState.Left:
+            case GravityState.Right:
+                moveDirValue = VerticalMove();
+                break;
+        }
+
+
+
+        transform.Translate(new Vector2(moveDirValue , 0f)* speed * Time.deltaTime);
+    }
+
+    float HorizontalMove()
+    {
+        Debug.Log("Horizontal");
+        float moveX = Input.GetAxis("Horizontal");
+
+        if (currentGravityState == GravityState.Up)
+        {
+            moveX *= -1f;
+        }
+
+        return moveX;
+    }
+
+    float VerticalMove()
+    {
+        Debug.Log("Vertical");
+
+        float moveY = Input.GetAxis("Vertical");
+
+        if (moveY > 0f)
+        {
+            int posX = CurrentTilePos.x + (currentGravityState == GravityState.Left ? -1 : 1);
+            if (!GameManager.Inst.PaintBlockCheck(posX, CurrentTilePos.y + 1) && transform.position.y > CurrentTilePos.y + 0.5f)
+            {
+                return 0f;
+            }
+        }
+
+        if (currentGravityState == GravityState.Left)
+        {
+            moveY *= -1f;
+        }
+
+       
+
+        return moveY;
     }
 
     void Jump()
@@ -164,11 +223,19 @@ public class Player : MonoBehaviour
     {
         float zRotate = 0f;
 
-        zRotate = GameManager.Inst.GetZRotate();
+        zRotate = GameManager.Inst.GetZRotate(currentGravityState);
 
         transform.rotation = Quaternion.Euler(0f, 0f, zRotate);
 
-        currentGravityDir = GameManager.Inst.GetGravityDirection();
+        if(isdd)
+        {
+            SetGravityDirecction();
+        }
+    }
+
+    private void SetGravityDirecction()
+    {
+        currentGravityDir = GameManager.Inst.GetGravityDirection(currentGravityState);
     }
 
     void OnCollisionEnter2D(Collision2D collision)

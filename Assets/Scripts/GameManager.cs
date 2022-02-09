@@ -6,7 +6,6 @@ using UnityEngine.Tilemaps;
 
 public class GameManager : MonoSingleTon<GameManager>
 {
-    private GravityState gameGravityState;
     public GameState gameState { get; private set; }
     public Vector3Int playerTilePos;
 
@@ -16,7 +15,6 @@ public class GameManager : MonoSingleTon<GameManager>
     void Start()
     {
         SetGameState(GameState.Start);
-        gameGravityState = GravityState.Down;
         int x = tileMap.cellBounds.size.x;
         int y = tileMap.cellBounds.size.y;
         tilemapInfoArray = new bool[x, y];
@@ -26,15 +24,9 @@ public class GameManager : MonoSingleTon<GameManager>
     {
         gameState = state;  
     }
-    public void SetGravityState(GravityState state)
+    public float GetZRotate(GravityState state)
     {
-        gameGravityState = state;
-        EventManager.TriggerEvent("CHANGEGRAVITYSTATE");
-    }
-
-    public float GetZRotate()
-    {
-        switch (gameGravityState)
+        switch (state)
         {
             case GravityState.Left:
                 return -90f;
@@ -47,24 +39,6 @@ public class GameManager : MonoSingleTon<GameManager>
 
             default:
                 return 0f;
-        }
-    }
-
-    public Vector2 GetGravityDirection()
-    {
-        switch (gameGravityState)
-        {
-            case GravityState.Left:
-                return Vector2.left;
-            case GravityState.Right:
-                return Vector2.right;
-            case GravityState.Down:
-                return Vector2.down;
-            case GravityState.Up:
-                return Vector2.up;
-
-            default:
-                return Vector2.down;
         }
     }
 

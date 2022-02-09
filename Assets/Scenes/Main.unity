@@ -2158,6 +2158,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bec6ab437a7b4aa4983ac1ba3d3205ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  paintTile:
+  - {fileID: 11400000, guid: 54f1954d2446aaf47870c61455181c58, type: 2}
+  - {fileID: 11400000, guid: 3f0dc995e75df914d97eb9ae00540d77, type: 2}
+  - {fileID: 11400000, guid: a536e50107cf52741ab28489ae9a18fd, type: 2}
+  - {fileID: 11400000, guid: 9e5b5a1e3b00e0a4599d22d02a6e9198, type: 2}
+  paintTileMap: {fileID: 0}
   Remaining: 90
 --- !u!95 &867449219
 Animator:
