@@ -1,24 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-<<<<<<< HEAD
 using UnityEngine.UI;
-=======
->>>>>>> OIF
 using UnityEngine.Tilemaps;
 
 public class GameManager : MonoSingleTon<GameManager>
 {
-<<<<<<< HEAD
     private GravityState gameGravityState;
 
     public Vector3Int playerTilePos;
 
     [SerializeField] public Tilemap tileMap;
+    private bool[,] tilemapInfoArray;
 
     void Start()
     {
         gameGravityState = GravityState.Down;
+        int x = tileMap.cellBounds.size.x;
+        int y = tileMap.cellBounds.size.y;
+        tilemapInfoArray = new bool[x, y];
     }
 
 
@@ -62,14 +62,6 @@ public class GameManager : MonoSingleTon<GameManager>
             default:
                 return Vector2.down;
         }
-=======
-    [SerializeField] private Tilemap tilemap;
-    private bool[,] tilemapInfoArray;
-    void Start()
-    {
-        int x = tilemap.cellBounds.size.x;
-        int y = tilemap.cellBounds.size.y;
-        tilemapInfoArray = new bool[x, y];
     }
 
     public bool PaintBlockCheck(int x, int y)
@@ -90,7 +82,6 @@ public class GameManager : MonoSingleTon<GameManager>
 
     public int ConversionToTilemapGridPos(int pos, bool isPosX)
     {
-        return pos + Mathf.Abs(isPosX ? tilemap.cellBounds.xMin : tilemap.cellBounds.yMin);
->>>>>>> OIF
+        return pos + Mathf.Abs(isPosX ? tileMap.cellBounds.xMin : tileMap.cellBounds.yMin);
     }
 }
