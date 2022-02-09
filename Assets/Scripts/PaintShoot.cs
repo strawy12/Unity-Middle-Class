@@ -71,7 +71,6 @@ public class PaintShoot : MonoBehaviour
                     GameManager.Inst.tileMap.SetColor(v3Int, (Color.red));
 
                     GameManager.Inst.SetPaintBlock(v3Int.x, v3Int.y, true);
-                    Debug.Log(v3Int);
                 }
             }
         }

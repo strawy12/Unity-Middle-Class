@@ -122,8 +122,6 @@ public class Player : MonoBehaviour
         tilepos.x = x;
         tilepos.y = y;
 
-        Debug.Log("tile" + tilepos);
-
         if (GameManager.Inst.PaintBlockCheck(tilepos.x, tilepos.y))
         {
             raycastData.isdetected = true;
@@ -143,19 +141,11 @@ public class Player : MonoBehaviour
 
     void Move()
     {
-        float moveX = 0f;
+        float moveX = Input.GetAxis("Horizontal");
+        
+        float xSpeed = moveX * speed;
 
-        if (Input.GetKey(KeyCode.A))
-        {
-            moveX -= speed;
-        }
-
-        if (Input.GetKey(KeyCode.D))
-        {
-            moveX += speed;
-        }
-
-        transform.Translate(new Vector2(moveX, 0f) * 0.1f);
+        transform.Translate(new Vector2(xSpeed, 0f) * Time.deltaTime);
     }
 
     void Jump()

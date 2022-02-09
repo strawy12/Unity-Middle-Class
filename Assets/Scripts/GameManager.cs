@@ -101,6 +101,5 @@ public class GameManager : MonoSingleTon<GameManager>
     public int ConversionToTilemapGridPos(int pos, bool isPosX)
     {
         return pos + Mathf.Abs(isPosX ? tileMap.cellBounds.xMin : tileMap.cellBounds.yMin);
-
     }
 }
