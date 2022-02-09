@@ -901,8 +901,8 @@ Tilemap:
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: -13, y: -13, z: 0}
-  m_Size: {x: 26, y: 26, z: 1}
+  m_Origin: {x: -25, y: -15, z: 0}
+  m_Size: {x: 52, y: 32, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -1609,32 +1609,108 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 1379946716}
     m_ColliderPaths:
-    - - X: 130000000
-        Y: 130000000
-      - X: -130000000
-        Y: 130000000
-      - X: -130000000
-        Y: -130000000
-      - X: 130000000
-        Y: -130000000
-    - - X: -120000000
-        Y: -120000000
-      - X: -120000000
-        Y: 120000000
-      - X: 120000000
-        Y: 120000000
-      - X: 120000000
-        Y: -120000000
+    - - X: 130000100
+        Y: -130000041
+      - X: 130000100
+        Y: -110000100
+      - X: 129999959
+        Y: -110000100
+      - X: 129999900
+        Y: -110000041
+      - X: 129999900
+        Y: -89999959
+      - X: 129999959
+        Y: -89999900
+      - X: 130000100
+        Y: -89999900
+      - X: 130000100
+        Y: 79999900
+      - X: 129999959
+        Y: 79999900
+      - X: 129999900
+        Y: 79999959
+      - X: 129999900
+        Y: 110000041
+      - X: 129999959
+        Y: 110000100
+      - X: 130000100
+        Y: 110000100
+      - X: 130000100
+        Y: 130000041
+      - X: 130000041
+        Y: 130000100
+      - X: -110000041
+        Y: 130000100
+      - X: -110000100
+        Y: 130000041
+      - X: -110000100
+        Y: 119999959
+      - X: -110000041
+        Y: 119999900
+      - X: 119999900
+        Y: 119999900
+      - X: 119999900
+        Y: -119999900
+      - X: -119999900
+        Y: -119999900
+      - X: -119999900
+        Y: -50000100
+      - X: -120000041
+        Y: -50000100
+      - X: -120000100
+        Y: -50000041
+      - X: -120000100
+        Y: -39999959
+      - X: -120000041
+        Y: -39999900
+      - X: -119999900
+        Y: -39999900
+      - X: -119999900
+        Y: 130000041
+      - X: -119999959
+        Y: 130000100
+      - X: -130000041
+        Y: 130000100
+      - X: -130000100
+        Y: 130000041
+      - X: -130000100
+        Y: -130000041
+      - X: -130000041
+        Y: -130000100
+      - X: 130000041
+        Y: -130000100
+    - - X: -114199900
+        Y: 124199959
+      - X: -114199900
+        Y: 125800041
+      - X: -114199959
+        Y: 125800100
+      - X: -115800041
+        Y: 125800100
+      - X: -115800100
+        Y: 125800041
+      - X: -115800100
+        Y: 124199959
+      - X: -115800041
+        Y: 124199900
+      - X: -114199959
+        Y: 124199900
   m_CompositePaths:
     m_Paths:
-    - - {x: 12.99997, y: -13}
-      - {x: 12.99997, y: 13}
-      - {x: -13, y: 12.99997}
-      - {x: -12.99997, y: -13}
-    - - {x: 12, y: -11.99997}
-      - {x: -12, y: -11.99997}
-      - {x: -11.99997, y: 12}
-      - {x: 12, y: 11.99997}
+    - - {x: 12.999974, y: -13.00001}
+      - {x: 12.999974, y: 13.00001}
+      - {x: -11.00001, y: 12.999974}
+      - {x: -10.999974, y: 11.99999}
+      - {x: 11.99999, y: 11.999961}
+      - {x: 11.999961, y: -11.99999}
+      - {x: -11.99999, y: -11.999961}
+      - {x: -12.000026, y: 13.00001}
+      - {x: -13.00001, y: 12.999974}
+      - {x: -12.999974, y: -13.00001}
+    - - {x: -11.420026, y: 12.419991}
+      - {x: -11.420026, y: 12.580009}
+      - {x: -11.580009, y: 12.579974}
+      - {x: -11.579974, y: 12.419991}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
 --- !u!50 &1379946715
@@ -2796,7 +2872,7 @@ Tilemap:
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -13, y: -13, z: 0}
-  m_Size: {x: 26, y: 26, z: 1}
+  m_Size: {x: 27, y: 26, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
@@ -2897,50 +2973,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1843411899
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1843411901}
-  - component: {fileID: 1843411900}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1843411900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1843411899}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59cdd83a3d405da46b3e5ca1293c31d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tilemap: {fileID: 451773583}
---- !u!4 &1843411901
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1843411899}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4598242089619142475
 PrefabInstance:

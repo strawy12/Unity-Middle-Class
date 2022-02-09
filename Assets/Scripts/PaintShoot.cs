@@ -52,17 +52,28 @@ public class PaintShoot : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+
+
             Debug.Log("hit:"+hit.point);
             Debug.Log("v3int:"+v3Int);
+
             ShootDir();
             if (hit.collider != null)
             {
+                if(GameManager.Inst.PaintBlockCheck(v3Int.x, v3Int.y))
+                {
+                    Debug.Log("이미 페인트인 곳");
+                    return;
+                }
+
                 tilemap.RefreshAllTiles();
 
                 //타일 색 바꿀 때 이게 있어야 하더군요
                 this.tilemap.SetTileFlags(v3Int, TileFlags.None);
                 //타일 색 바꾸기
                 this.tilemap.SetColor(v3Int, (Color.red));
+
+                GameManager.Inst.SetPaintBlock(v3Int.x, v3Int.y, true);
             }
         }
     }
