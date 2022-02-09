@@ -149,4 +149,5 @@ MonoBehaviour:
   jumpForce: 5
   isGround: 1
   player: {fileID: 5984758027065798149}
+  tilemap: {fileID: 0}
   maxDistance: 3
