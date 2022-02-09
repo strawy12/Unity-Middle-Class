@@ -12,7 +12,9 @@ public class PaintShoot : MonoBehaviour
     private Vector2 targetDir;
     private Vector3Int v3Int;
     private RaycastHit2D hit;
-    int x, y;
+
+    public int Remaining; //남은 개수
+    int tileX, tileY;
     void Start()
     {
         line = GetComponent<LineRenderer>();
@@ -23,16 +25,16 @@ public class PaintShoot : MonoBehaviour
         targetPos.y = mouseP.y - transform.position.y;
         targetPos.x = mouseP.x - transform.position.x;
         targetDir = targetPos.normalized;
-    
+        TargetMouse();
         hit = Physics2D.Raycast(transform.position, targetDir, 999f, LayerMask.GetMask("Block"));
         Debug.DrawRay(transform.position, targetDir * 999, Color.red);
         Vector3 hitPos = hit.point;
-        hitPos += (Vector3)targetDir*0.5f;
-        x = this.tilemap.WorldToCell(hitPos).x;
-        y = this.tilemap.WorldToCell(hitPos).y;
+        hitPos += (Vector3)targetDir*0.3f;
+        tileX = this.tilemap.WorldToCell(hitPos).x;
+        tileY = this.tilemap.WorldToCell(hitPos).y;
 
-        v3Int = new Vector3Int(x, y, 0);
-        TargetMouse();
+        v3Int = new Vector3Int(tileX, tileY, 0);
+      
     }
     public void TargetMouse()
     {
@@ -40,7 +42,7 @@ public class PaintShoot : MonoBehaviour
         {
             line.enabled = true;
             line.SetPosition(0, transform.position);
-            line.SetPosition(1, mouseP);
+            line.SetPosition(1, targetDir * 999f);
             ShootPaint();
         }
         else
@@ -52,8 +54,6 @@ public class PaintShoot : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("hit:"+hit.point);
-            Debug.Log("v3int:"+v3Int);
             ShootDir();
             if (hit.collider != null)
             {
@@ -68,28 +68,32 @@ public class PaintShoot : MonoBehaviour
     }
     public void ShootDir()
     {
-        Vector3 dir;
-        dir = new Vector3(hit.point.x - (v3Int.x + 0.5f),hit.point.y -(v3Int.y + 0.5f)).normalized;
-        if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
+        if (Remaining > 0)
         {
-            if (hit.point.x > v3Int.x + 0.5)
+            Vector3 dir;
+            dir = new Vector3(hit.point.x - (v3Int.x + 0.5f), hit.point.y - (v3Int.y + 0.5f)).normalized;
+            Remaining--;
+            if (Mathf.Abs(dir.x) < Mathf.Abs(dir.y))
             {
-                Debug.Log("right");
+                if (hit.point.y > v3Int.y + 0.5)
+                {
+                    //Debug.Log("up");
+                }
+                if (hit.point.y < v3Int.y + 0.5)
+                {
+                    //Debug.Log("down");
+                }
             }
-            if (hit.point.x < v3Int.x + 0.5)
+            else
             {
-                Debug.Log("left");
-            }
-        }
-        else
-        {
-            if (hit.point.y > v3Int.y + 0.5)
-            {
-                Debug.Log("up");
-            }
-            if (hit.point.y < v3Int.y + 0.5)
-            {
-                Debug.Log("down");
+                if (hit.point.x > v3Int.x + 0.5)
+                {
+                    //Debug.Log("right");
+                }
+                if (hit.point.x < v3Int.x + 0.5)
+                {
+                    //Debug.Log("left");
+                }
             }
         }
     }
