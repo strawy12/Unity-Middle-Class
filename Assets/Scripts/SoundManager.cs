@@ -7,18 +7,10 @@ using UnityEngine.SceneManagement;
 
 public class SoundManager : MonoSingleTon<SoundManager>
 {
-    [SerializeField]private List<AudioClip> effectSounds = null;
-    [SerializeField]private List<AudioClip> bgms = null;
+    [SerializeField] private List<AudioClip> effectSounds = null;
+    [SerializeField] private List<AudioClip> bgms = null;
     private AudioSource bgmAudio;
     private AudioSource effectAudio;
-
-    bool IsMain
-    {
-        get
-        {
-            return SceneManager.GetActiveScene().ToString() == "Main";
-        }
-    }
 
     private void Awake()
     {
@@ -31,6 +23,8 @@ public class SoundManager : MonoSingleTon<SoundManager>
         DontDestroyOnLoad(gameObject);
         bgmAudio = GetComponent<AudioSource>();
         effectAudio = transform.GetChild(0).GetComponent<AudioSource>();
+
+
     }
 
     private void Start()
