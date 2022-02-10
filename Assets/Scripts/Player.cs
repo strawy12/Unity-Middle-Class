@@ -194,10 +194,10 @@ public class Player : MonoBehaviour
         if (moveY > 0f)
         {
             int posX = CurrentTilePos.x + (currentGravityState == GravityState.Left ? -1 : 1);
-            if (!GameManager.Inst.PaintBlockCheck(posX, CurrentTilePos.y + 1) && transform.position.y > CurrentTilePos.y + 0.5f)
-            {
-                return 0f;
-            }
+            //if (!GameManager.Inst.PaintBlockCheck(posX, CurrentTilePos.y + 1) && transform.position.y > CurrentTilePos.y + 0.5f)
+            //{
+            //    return 0f;
+            //}
         }
 
         if (currentGravityState == GravityState.Left)
