@@ -14,7 +14,7 @@ public class CameraController : MonoBehaviour
     {
         Vector3 rot = Vector3.zero;
 
-        rot.z = GameManager.Inst.GetZRotate();
+       // rot.z = GameManager.Inst.GetZRotate();
 
         transform.DORotate(rot, .5f);
     }
