@@ -230,7 +230,6 @@ public class Player : MonoBehaviour
 
     float VerticalMove()
     {
-
         float moveY = Input.GetAxis("Vertical");
 
         if (moveY > 0f)
@@ -258,10 +257,12 @@ public class Player : MonoBehaviour
                 if(doubleSpace > 0) { 
                     body.AddForce(currentGravityDir * jumpForce * -1f, ForceMode2D.Impulse);
                     doubleSpace--;
+                    SoundManager.Inst.SetEffectSound(2);
                 }
             }
             else
             {
+                SoundManager.Inst.SetEffectSound(2);
                 isGround = false;
                 body.AddForce(currentGravityDir * jumpForce * -1f, ForceMode2D.Impulse);
             } 
@@ -275,11 +276,8 @@ public class Player : MonoBehaviour
         zRotate = GameManager.Inst.GetZRotate(currentGravityState);
 
         transform.rotation = Quaternion.Euler(0f, 0f, zRotate);
-
-
-            SetGravityDirecction();
-
-        
+         
+        SetGravityDirecction();
     }
 
     private void SetGravityDirecction()

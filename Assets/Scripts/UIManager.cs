@@ -26,7 +26,11 @@ public class UIManager : MonoBehaviour
         {
             if (!isEsc)
             {
+<<<<<<< HEAD
                 Time.timeScale = 0f;
+=======
+                SoundManager.Inst.SetEffectSound(0);
+>>>>>>> kimyujin
                 escMenu.SetActive(true);
                 GameManager.Inst.SetGameState(GameState.Stop);
                 isEsc = true;
@@ -48,6 +52,7 @@ public class UIManager : MonoBehaviour
 
     public void OnClickReturnToGame()
     {
+        SoundManager.Inst.SetEffectSound(0);
         isEsc = false;
         escMenu.SetActive(false);
         Time.timeScale = 1;
@@ -55,11 +60,13 @@ public class UIManager : MonoBehaviour
     }
     public void OnClickSetting()
     {
+        SoundManager.Inst.SetEffectSound(0);
         escMenu.SetActive(false);
         settingPanel.SetActive(true);
     }
     public void OnClickExit()
     {
+        SoundManager.Inst.SetEffectSound(0);
         Application.Quit();
     }
 }
