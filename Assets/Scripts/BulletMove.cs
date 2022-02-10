@@ -31,6 +31,7 @@ public class BulletMove : MonoBehaviour
     {
         v3Int = v3I;
         hitPoint = hitP;
+        Invoke("Destroy", 2f);
     }
     public void HItCheck()
     {
@@ -40,5 +41,10 @@ public class BulletMove : MonoBehaviour
             Debug.Log("destroy");
             paintShoot.ShootDir(hitPoint, v3Int);
         }
+    }
+
+    public void Destroy()
+    {
+        Destroy(gameObject);
     }
 }
