@@ -70,10 +70,10 @@ public class PaintShoot : MonoBehaviour
                     animator.Play("Slime Shoot");
                     FirePaint();
                     Remaining--;
-<<<<<<< HEAD
+
                     shootDir = new Vector3(hit.point.x - (v3Int.x + 0.5f), hit.point.y - (v3Int.y + 0.5f)).normalized;
                     if (Mathf.Abs(shootDir.x) == Mathf.Abs(shootDir.y)) { Debug.Log("return"); return; }
-                    ShootDir();
+                    ShootDir(hit.point, v3Int);
                     GameManager.Inst.tileMap.RefreshAllTiles();
 
                     //타일 색 바꿀 때 이게 있어야 하더군요
@@ -81,8 +81,6 @@ public class PaintShoot : MonoBehaviour
                     //타일 색 바꾸기
                     //GameManager.Inst.tileMap.SetColor(v3Int, (Color.red));
                     GameManager.Inst.SetPaintBlock(v3Int.x, v3Int.y, true);
-=======
->>>>>>> injun
                 }
             }
         }
