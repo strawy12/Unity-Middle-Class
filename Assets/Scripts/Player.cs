@@ -39,12 +39,10 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Inst.gameState == GameState.Start)
-        {
-            Move();
-            Jump();
-            Gravity();
-        }
+       if(GameManager.Inst.gameState == GameState.Start)
+        Move();
+        Jump();
+        Gravity();
     }
 
 
@@ -66,7 +64,7 @@ public class Player : MonoBehaviour
         float distance;
         for (int index = 0; index < (int)GravityState.Count; index++)
         {
-            if (CheckDetectRaycast((GravityState)index))
+            if (CheckDetectRaycast((GravityState)index)) // TODO: 레이캐스트 데이터 값만 수정해주고
             {
 
                 distance = raycastDataList[index].detectDistance;
@@ -102,7 +100,7 @@ public class Player : MonoBehaviour
         {
             currentGravityState = GravityState.Down;
             Rotation();
-        }
+        }// 함수로 따로 뺀 다음에\
 
 
     }

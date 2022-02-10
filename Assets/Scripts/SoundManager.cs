@@ -9,6 +9,7 @@ public class SoundManager : MonoSingleTon<SoundManager>
 {
     [SerializeField] private List<AudioClip> effectSounds = null;
     [SerializeField] private List<AudioClip> bgms = null;
+    [SerializeField] private List<AudioClip> easterEggEffectSounds = null;
     private AudioSource bgmAudio;
     private AudioSource effectAudio;
 
@@ -75,6 +76,14 @@ public class SoundManager : MonoSingleTon<SoundManager>
         effectAudio.Stop();
 
         effectAudio.clip = effectSounds[effectNum];
+        effectAudio.Play();
+    }
+
+    public void SetEsterEggEffectSound(int effectNum)
+    {
+        effectAudio.Stop();
+
+        effectAudio.clip = easterEggEffectSounds[effectNum];
         effectAudio.Play();
     }
     public void StopBGM()
