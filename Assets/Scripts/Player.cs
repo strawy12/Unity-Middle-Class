@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 {
     private Vector2 currentGravityDir;
     private GravityState currentGravityState;
-
+    [SerializeField]private GameObject clearPanel;
     public float speed;
     public float rotateSpeed = 10.0f;
     public float jumpForce = 1.0f; // Á¡ÇÁÇÏ´Â Èû
@@ -41,6 +41,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+<<<<<<< HEAD
         if (isChangeGravity)
         {
             Gravity();
@@ -48,6 +49,12 @@ public class Player : MonoBehaviour
         }
 
 
+=======
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            StageManager.Inst.ReStart();
+        }
+>>>>>>> injun
         if (GameManager.Inst.gameState == GameState.Start)
         {
             Move();
@@ -298,6 +305,12 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("Square"))
         {
             isGround = true;
+        }
+        if(collision.gameObject.CompareTag("Goal"))
+        {
+            clearPanel.SetActive(true);
+            GameManager.Inst.SetGameState(GameState.Clear);
+            Time.timeScale = 0;
         }
     }
 

@@ -49,7 +49,14 @@ public class PaintShoot : MonoBehaviour
         {
             line.enabled = true;
             line.SetPosition(0, transform.position);
-            line.SetPosition(1, targetDir * 999f);
+            if (hit.collider != null)
+            {
+                line.SetPosition(1, hit.point);
+            }
+            else
+            {
+                line.SetPosition(1, targetDir * 999f);
+            }
             ShootPaint();
         }
         else
@@ -73,7 +80,7 @@ public class PaintShoot : MonoBehaviour
                     Remaining--;
 
                     shootDir = new Vector3(hit.point.x - (v3Int.x + 0.5f), hit.point.y - (v3Int.y + 0.5f)).normalized;
-                    if (Mathf.Abs(shootDir.x) == Mathf.Abs(shootDir.y)) { Debug.Log("return"); return; }
+                    if (Mathf.Abs(shootDir.x) == Mathf.Abs(shootDir.y)) { return; }
                     GameManager.Inst.tileMap.RefreshAllTiles();
 
                     //타일 색 바꿀 때 이게 있어야 하더군요
@@ -113,7 +120,6 @@ public class PaintShoot : MonoBehaviour
                 paintTileMap.SetTile(v3I, paintTile[0]);
             }
         }
-        //isShoot = false;
     }
     public void FirePaint()
     {
@@ -132,7 +138,7 @@ public class PaintShoot : MonoBehaviour
     public void SetHitPos()
     {
         Vector3 hitPos = hit.point;
-        hitPos += (Vector3)targetDir * 0.01f;
+        hitPos += (Vector3)targetDir * 0.02f;
         tileX = GameManager.Inst.tileMap.WorldToCell(hitPos).x;
         tileY = GameManager.Inst.tileMap.WorldToCell(hitPos).y;
     }

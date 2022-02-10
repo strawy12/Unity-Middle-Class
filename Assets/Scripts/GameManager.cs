@@ -87,4 +87,5 @@ public class GameManager : MonoSingleTon<GameManager>
     {
         return pos + Mathf.Abs(isPosX ? tileMap.cellBounds.xMin : tileMap.cellBounds.yMin);
     }
+
 }

@@ -21,9 +21,15 @@ public class FadeText : MonoBehaviour
         while(true)
         {
             text.DOFade(0f, fadeTime);
+<<<<<<< HEAD
             new WaitForSeconds(fadeTime);
             text.DOFade(1f, fadeTime);
             new WaitForSeconds(fadeTime);
+=======
+            yield return new WaitForSeconds(fadeTime);
+            text.DOFade(1f, fadeTime);
+            yield return new WaitForSeconds(fadeTime);
+>>>>>>> injun
         }
     }
 }
