@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+<<<<<<< HEAD
 
         if (GameManager.Inst.gameState == GameState.Start)
         {
@@ -56,6 +57,12 @@ public class Player : MonoBehaviour
         currentGravityState = GravityState.Down;
         Rotation();
 
+=======
+       if(GameManager.Inst.gameState == GameState.Start)
+        Move();
+        Jump();
+        Gravity();
+>>>>>>> OIF
     }
 
     void SpaceGravityCheck()
@@ -96,7 +103,11 @@ public class Player : MonoBehaviour
 
         for (int index = 0; index < raycastDataList.Count; index++)
         {
+<<<<<<< HEAD
             if (raycastDataList[index].isdetected)
+=======
+            if (CheckDetectRaycast((GravityState)index)) // TODO: 레이캐스트 데이터 값만 수정해주고
+>>>>>>> OIF
             {
                 distance = raycastDataList[index].detectDistance;
 
@@ -131,7 +142,13 @@ public class Player : MonoBehaviour
         {
             currentGravityState = GravityState.Down;
             Rotation();
+<<<<<<< HEAD
         }
+=======
+        }// 함수로 따로 뺀 다음에\
+
+
+>>>>>>> OIF
     }
 
     private bool CheckDetectRaycast(GravityState state)
