@@ -69,6 +69,7 @@ public class PaintShoot : MonoBehaviour
                     //isShoot = true;
                     animator.Play("Slime Shoot");
                     FirePaint();
+                    SoundManager.Inst.SetEffectSound(1);
                     Remaining--;
 
                     shootDir = new Vector3(hit.point.x - (v3Int.x + 0.5f), hit.point.y - (v3Int.y + 0.5f)).normalized;
