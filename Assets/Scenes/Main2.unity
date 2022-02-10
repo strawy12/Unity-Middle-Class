@@ -8215,6 +8215,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &800286483 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8393502669598053323, guid: b2af85a5ff7d5e943b78fae95ac4f8e1, type: 3}
+  m_PrefabInstance: {fileID: 1203229597}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &926129844
 GameObject:
   m_ObjectHideFlags: 0
@@ -9000,6 +9005,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 858863740479450225, guid: b2af85a5ff7d5e943b78fae95ac4f8e1, type: 3}
+      propertyPath: bullet
+      value: 
+      objectReference: {fileID: 9125208446892978176, guid: dbfda4498e2c5224fb9e21d077f506e0, type: 3}
+    - target: {fileID: 858863740479450225, guid: b2af85a5ff7d5e943b78fae95ac4f8e1, type: 3}
+      propertyPath: paintTileMap
+      value: 
+      objectReference: {fileID: 558286459}
+    - target: {fileID: 858863740479450225, guid: b2af85a5ff7d5e943b78fae95ac4f8e1, type: 3}
+      propertyPath: bulletPosition
+      value: 
+      objectReference: {fileID: 800286483}
     - target: {fileID: 6405646656482640497, guid: b2af85a5ff7d5e943b78fae95ac4f8e1, type: 3}
       propertyPath: m_RootOrder
       value: 9
