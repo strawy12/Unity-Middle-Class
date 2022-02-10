@@ -40,10 +40,6 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            StageManager.Inst.ReStart();
-        }
 
         if (GameManager.Inst.gameState == GameState.Start)
         {

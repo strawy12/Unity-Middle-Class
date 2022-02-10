@@ -30,16 +30,13 @@ public class SoundManager : MonoSingleTon<SoundManager>
 
     private void Start()
     {
-        //if (SceneManager.GetActiveScene().name == "Title")
-        //{
-        //    StartVolumeSetting();
-        //}
+        VolumeSetting();
     }
 
     public void VolumeSetting()
     {
-        bgmAudio.volume = 0.5f;
-        effectAudio.volume = 0.5f;
+        bgmAudio.volume = DataManager.Inst.CurrentPlayer.bgmSoundVolume;
+        effectAudio.volume = DataManager.Inst.CurrentPlayer.effectSoundVolume;
         bgmAudio.mute = false;
         effectAudio.mute = false;
     }
@@ -48,7 +45,7 @@ public class SoundManager : MonoSingleTon<SoundManager>
     {
         if (bgmAudio == null) return;
         bgmAudio.volume = value;
-
+        DataManager.Inst.CurrentPlayer.bgmSoundVolume = value;
     }
 
     public void BGMMute(bool isMute)
@@ -64,6 +61,7 @@ public class SoundManager : MonoSingleTon<SoundManager>
     {
         if (effectAudio == null) return;
         effectAudio.volume = value;
+        DataManager.Inst.CurrentPlayer.effectSoundVolume = value;
     }
     public void SetBGM(int bgmNum)
     {

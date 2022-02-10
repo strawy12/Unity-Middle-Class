@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 public class UIManager : MonoBehaviour
 {
     [SerializeField]
@@ -22,15 +23,35 @@ public class UIManager : MonoBehaviour
     private int tutorialTextNum = 0;
     private bool isTutorialed = false;
     private bool isTitle;
+    [SerializeField]
+    private Slider effectSlider;
+    [SerializeField]
+    private Slider bgmSlider;
     // Start is called before the first frame update
     void Start()
     {
-        Time.timeScale = 0f;
-        isTitle = true;
-        GameManager.Inst.SetGameState(GameState.Stop);
+        if (!DataManager.Inst.isReStart)
+        {
+            Time.timeScale = 0f;
+            isTitle = true;
+            GameManager.Inst.SetGameState(GameState.Stop);
+            DataManager.Inst.StartCheck();
+        }
+        else
+        {
+            titleCanvas.SetActive(false);
+        }
+       
+        SliderValueSet();
+
+
     }
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            OnClickRestart();
+        }
         if (isTutorialed)
         {
             if (Input.GetMouseButtonDown(0))
@@ -71,7 +92,7 @@ public class UIManager : MonoBehaviour
     {
         titleCanvas.SetActive(false);
         OnClickReturnToGame();
-        if (!StageManager.Inst.isTutorial)
+        if (!DataManager.Inst.CurrentPlayer.isTutorial)
         {
             TurnOnTutorialPanel();
         }
@@ -111,20 +132,20 @@ public class UIManager : MonoBehaviour
     }
     public void OnClickRestart()
     {
-        StageManager.Inst.ReStart();
+        SceneManager.LoadScene("Main");
     }
     public void TurnOnTutorialPanel()
     {
         tutorialPanel.SetActive(true);
         tutorialText.text = tutorialString[tutorialTextNum];
         isTutorialed = true;
+        DataManager.Inst.TutorialTurnOn();
     }
     public void NextTutorialText()
     {
        if(tutorialTextNum >= 3)
         {
             isTutorialed = false;
-            StageManager.Inst.isTutorial = true;
             tutorialPanel.SetActive(false);
         }
        else {
@@ -132,5 +153,10 @@ public class UIManager : MonoBehaviour
             tutorialTextNum++;
             tutorialText.DOText(tutorialString[tutorialTextNum], tutorialString[tutorialTextNum].Length * 0.03f);
        }
+    }
+    public void SliderValueSet()
+    {
+        effectSlider.value = DataManager.Inst.CurrentPlayer.effectSoundVolume;
+        bgmSlider.value = DataManager.Inst.CurrentPlayer.bgmSoundVolume;
     }
 }
