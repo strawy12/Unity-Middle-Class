@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     public float maxDistance = 5f;
 
     Rigidbody2D body; // 컴포넌트에서 RigidBody를 받아올 변수
-
+    private RaycastHit2D hit;
     [SerializeField] private bool isGround = true;
     [SerializeField] private GameObject player;
 
@@ -90,7 +90,6 @@ public class Player : MonoBehaviour
         {
             if (currentGravityState != priorityType)
             {
-                Debug.Log(priorityType);
                 currentGravityState = priorityType;
                 Rotation();
                 //body.velocity = Vector2.zero;
@@ -132,7 +131,7 @@ public class Player : MonoBehaviour
         tilepos.x = x;
         tilepos.y = y;
 
-        if (GameManager.Inst.PaintBlockCheck(tilepos.x, tilepos.y))
+        if (GameManager.Inst.PaintBlockCheck(tilepos.x, tilepos.y, state))
         {
             raycastData.isdetected = true;
             raycastData.detectDistance = Vector3Int.Distance(tilepos, CurrentTilePos);
@@ -172,7 +171,6 @@ public class Player : MonoBehaviour
 
     float HorizontalMove()
     {
-        Debug.Log("Horizontal");
         float moveX = Input.GetAxis("Horizontal");
 
         if (currentGravityState == GravityState.Up)
@@ -185,7 +183,6 @@ public class Player : MonoBehaviour
 
     float VerticalMove()
     {
-        Debug.Log("Vertical");
 
         float moveY = Input.GetAxis("Vertical");
 
@@ -225,10 +222,7 @@ public class Player : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(0f, 0f, zRotate);
 
-        if(isdd)
-        {
             SetGravityDirecction();
-        }
     }
 
     private void SetGravityDirecction()

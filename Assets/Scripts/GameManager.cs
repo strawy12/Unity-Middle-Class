@@ -10,14 +10,21 @@ public class GameManager : MonoSingleTon<GameManager>
     public Vector3Int playerTilePos;
 
     public Tilemap tileMap;
-    private bool[,] tilemapInfoArray;
+    private TileMapData[,] tilemapInfoArray;
 
     void Start()
     {
         SetGameState(GameState.Start);
         int x = tileMap.cellBounds.size.x;
         int y = tileMap.cellBounds.size.y;
-        tilemapInfoArray = new bool[x, y];
+        tilemapInfoArray = new TileMapData[x, y];
+        for(int i = 0; i < x; i++)
+        {
+            for(int j = 0; j < y; j++)
+            {
+                tilemapInfoArray[i, j] = new TileMapData();
+            }
+        }
     }
 
     public void SetGameState(GameState state)
@@ -60,20 +67,20 @@ public class GameManager : MonoSingleTon<GameManager>
         }
     }
 
-    public bool PaintBlockCheck(int x, int y)
+    public bool PaintBlockCheck(int x, int y, GravityState state)
     {
         x = ConversionToTilemapGridPos(x, true);
         y = ConversionToTilemapGridPos(y, false);
 
-        return tilemapInfoArray[x, y];
+        return tilemapInfoArray[x, y].isPaint && state == tilemapInfoArray[x,y].gravityState;
     }
 
-    public void SetPaintBlock(int x, int y, bool isPainted)
+    public void SetPaintBlock(int x, int y, bool isPainted, GravityState state)
     {
         x = ConversionToTilemapGridPos(x, true);
         y = ConversionToTilemapGridPos(y, false);
-
-        tilemapInfoArray[x, y] = isPainted;
+        tilemapInfoArray[x, y].gravityState = state;
+        tilemapInfoArray[x, y].isPaint = isPainted;
     }
 
     public int ConversionToTilemapGridPos(int pos, bool isPosX)

@@ -73,14 +73,12 @@ public class PaintShoot : MonoBehaviour
 
                     shootDir = new Vector3(hit.point.x - (v3Int.x + 0.5f), hit.point.y - (v3Int.y + 0.5f)).normalized;
                     if (Mathf.Abs(shootDir.x) == Mathf.Abs(shootDir.y)) { Debug.Log("return"); return; }
-                    ShootDir(hit.point, v3Int);
                     GameManager.Inst.tileMap.RefreshAllTiles();
 
                     //타일 색 바꿀 때 이게 있어야 하더군요
                     //GameManager.Inst.tileMap.SetTileFlags(v3Int, TileFlags.None);
                     //타일 색 바꾸기
                     //GameManager.Inst.tileMap.SetColor(v3Int, (Color.red));
-                    GameManager.Inst.SetPaintBlock(v3Int.x, v3Int.y, true);
                 }
             }
         }
@@ -88,16 +86,16 @@ public class PaintShoot : MonoBehaviour
     public void ShootDir(Vector3 hitP, Vector3Int v3I)
     {
         shootDir = new Vector3(hitP.x - (v3I.x + 0.5f), hitP.y - (v3I.y + 0.5f)).normalized;
-        GameManager.Inst.SetPaintBlock(v3I.x, v3I.y, true);
         if (Mathf.Abs(shootDir.x) < Mathf.Abs(shootDir.y))
         {
             if (hitP.y > v3I.y + 0.5)
             {
-            
+                GameManager.Inst.SetPaintBlock(v3I.x, v3I.y, true, GravityState.Down);
                 paintTileMap.SetTile(v3I, paintTile[2]);
             }
             if (hitP.y < v3I.y + 0.5)
             {
+                GameManager.Inst.SetPaintBlock(v3I.x, v3I.y, true, GravityState.Up);
                 paintTileMap.SetTile(v3I, paintTile[3]);
             }
         }
@@ -105,10 +103,12 @@ public class PaintShoot : MonoBehaviour
         {
             if (hitP.x > v3I.x + 0.5)
             {
+                GameManager.Inst.SetPaintBlock(v3I.x, v3I.y, true, GravityState.Left);
                 paintTileMap.SetTile(v3I, paintTile[1]);
             }
             if (hitP.x < v3I.x + 0.5)
             {
+                GameManager.Inst.SetPaintBlock(v3I.x, v3I.y, true, GravityState.Right);
                 paintTileMap.SetTile(v3I, paintTile[0]);
             }
         }
