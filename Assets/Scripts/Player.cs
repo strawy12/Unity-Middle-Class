@@ -9,7 +9,6 @@ public class Player : MonoBehaviour
     private GravityState currentGravityState;
 
     public float speed;
-    public bool isdd;
     public float rotateSpeed = 10.0f;
     public float jumpForce = 1.0f; // Á¡ÇÁÇÏ´Â Èû
     public float maxDistance = 5f;
@@ -20,6 +19,9 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject player;
 
     private List<RaycastData> raycastDataList;
+
+    public bool isSpaceCheck;
+    private int doubleSpace = 2;
 
     private Vector3Int CurrentTilePos { get { return GameManager.Inst.tileMap.WorldToCell(transform.position); } }
 
@@ -32,22 +34,54 @@ public class Player : MonoBehaviour
         currentGravityDir = Vector2.down;
     }
 
-    void FixedUpdate()
-    {
-        DetectedRaycast();
-    }
-
     private void Update()
     {
+<<<<<<< HEAD
         if (GameManager.Inst.gameState == GameState.Start)
         {
             Move();
             Jump();
             Gravity();
         }
+=======
+        if(GameManager.Inst.gameState == GameState.Start)
+        Move();
+        Gravity();
+        SpaceGravityCheck();
+        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            DetectedRaycast();
+            Jump();
+        }
     }
 
+    void RayCastOut()
+    {
+        currentGravityState = GravityState.Down;
+        Rotation();
+>>>>>>> kimyujin
+    }
 
+    void SpaceGravityCheck()
+    {
+        bool detectCheck = false;
+
+        for (int index = 0; index < (int)GravityState.Count; index++)
+        {
+            if(CheckDetectRaycast((GravityState)index))
+            {
+                detectCheck = true;
+            }
+        }
+
+        isSpaceCheck = detectCheck && isSpaceCheck;
+
+        if(!detectCheck)
+        {
+            Invoke("RayCastOut", .2f);
+        }
+    }
 
     private void InitiateRaycastDataList()
     {
@@ -64,16 +98,16 @@ public class Player : MonoBehaviour
         GravityState priorityType = GravityState.None;
         float minDistance = 999f;
         float distance;
-        for (int index = 0; index < (int)GravityState.Count; index++)
-        {
-            if (CheckDetectRaycast((GravityState)index))
-            {
 
+        for (int index = 0; index < raycastDataList.Count; index++)
+        {
+            if (raycastDataList[index].isdetected)
+            {
                 distance = raycastDataList[index].detectDistance;
 
                 if (distance < minDistance)
                 {
-                    priorityType = (GravityState)index;
+                    priorityType = raycastDataList[index].detectType;
                     minDistance = distance;
                 }
 
@@ -93,6 +127,7 @@ public class Player : MonoBehaviour
             if (currentGravityState != priorityType)
             {
                 currentGravityState = priorityType;
+
                 Rotation();
                 //body.velocity = Vector2.zero;
             }
@@ -102,8 +137,6 @@ public class Player : MonoBehaviour
             currentGravityState = GravityState.Down;
             Rotation();
         }
-
-
     }
 
     private bool CheckDetectRaycast(GravityState state)
@@ -135,9 +168,11 @@ public class Player : MonoBehaviour
 
         if (GameManager.Inst.PaintBlockCheck(tilepos.x, tilepos.y, state))
         {
+            isSpaceCheck = currentGravityState != state;
+
             raycastData.isdetected = true;
             raycastData.detectDistance = Vector3Int.Distance(tilepos, CurrentTilePos);
-
+           
             return true;
         }
 
@@ -165,8 +200,6 @@ public class Player : MonoBehaviour
                 moveDirValue = VerticalMove();
                 break;
         }
-
-
 
         transform.Translate(new Vector2(moveDirValue , 0f)* speed * Time.deltaTime);
     }
@@ -201,18 +234,25 @@ public class Player : MonoBehaviour
         {
             moveY *= -1f;
         }
-
-       
-
         return moveY;
     }
 
     void Jump()
     {
-        if (Input.GetKey(KeyCode.Space) && isGround)
+        if (isGround && !isSpaceCheck)
         {
-            body.AddForce(currentGravityDir * jumpForce * -1f, ForceMode2D.Impulse);
-            isGround = false;
+            if (currentGravityState != GravityState.Down)
+            {
+                if(doubleSpace > 0) { 
+                    body.AddForce(currentGravityDir * jumpForce * -1f, ForceMode2D.Impulse);
+                    doubleSpace--;
+                }
+            }
+            else
+            {
+                isGround = false;
+                body.AddForce(currentGravityDir * jumpForce * -1f, ForceMode2D.Impulse);
+            } 
         }
     }
 
@@ -224,7 +264,12 @@ public class Player : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(0f, 0f, zRotate);
 
+<<<<<<< HEAD
             SetGravityDirecction();
+=======
+        SetGravityDirecction();
+        
+>>>>>>> kimyujin
     }
 
     private void SetGravityDirecction()
@@ -236,6 +281,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Square"))
         {
+            doubleSpace = 2;
             isGround = true;
         }
     }
