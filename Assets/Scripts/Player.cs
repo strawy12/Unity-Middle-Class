@@ -132,10 +132,6 @@ public class Player : MonoBehaviour
         tilepos.x = x;
         tilepos.y = y;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> injun
         if (GameManager.Inst.PaintBlockCheck(tilepos.x, tilepos.y))
         {
             raycastData.isdetected = true;
