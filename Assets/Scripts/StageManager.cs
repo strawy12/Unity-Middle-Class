@@ -7,9 +7,10 @@ public class StageManager : MonoSingleTon<StageManager>
     [SerializeField]
     public GameObject stagePrefab;
     public GameObject stage;
+
+    public bool isTutorial = false;
     void Start()
     {
-        
     }
 
     void Update()
