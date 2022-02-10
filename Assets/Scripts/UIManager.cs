@@ -18,22 +18,25 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isEsc)
+        if (GameManager.Inst.gameState != GameState.Clear)
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            if (!isEsc)
             {
-                escMenu.SetActive(true);
-                GameManager.Inst.SetGameState(GameState.Stop);
-                isEsc = true;
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    escMenu.SetActive(true);
+                    GameManager.Inst.SetGameState(GameState.Stop);
+                    isEsc = true;
+                }
             }
-        }
-        else if(isEsc)
-        {
-            Time.timeScale = 0;
-            if (Input.GetKeyDown(KeyCode.Escape))
+            else if (isEsc)
             {
-                OnClickReturnToGame();
-                settingPanel.SetActive(false);
+                Time.timeScale = 0;
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    OnClickReturnToGame();
+                    settingPanel.SetActive(false);
+                }
             }
         }
     }
@@ -53,5 +56,9 @@ public class UIManager : MonoBehaviour
     public void OnClickExit()
     {
         Application.Quit();
+    }
+    public void OnClickRestart()
+    {
+        StageManager.Inst.ReStart();
     }
 }
