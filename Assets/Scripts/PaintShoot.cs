@@ -38,7 +38,7 @@ public class PaintShoot : MonoBehaviour
         SetHitPos();
         TargetMouse();
         hit = Physics2D.Raycast(transform.position, targetDir, 999f, LayerMask.GetMask("Block"));
-        Debug.DrawRay(transform.position, targetDir * 999, Color.red);
+
  
 
         v3Int = new Vector3Int(tileX, tileY, 0);
@@ -69,7 +69,7 @@ public class PaintShoot : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
            
-            if (hit.collider != null)
+            if (hit && hit.transform.CompareTag("Platform"))
             {
                 if (Remaining > 0)
                 {

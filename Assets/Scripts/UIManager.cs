@@ -21,10 +21,12 @@ public class UIManager : MonoBehaviour
     private string[] tutorialString;
     private int tutorialTextNum = 0;
     private bool isTutorialed = false;
+    private bool isTitle;
     // Start is called before the first frame update
     void Start()
     {
         Time.timeScale = 0f;
+        isTitle = true;
         GameManager.Inst.SetGameState(GameState.Stop);
     }
     void Update()
@@ -41,6 +43,12 @@ public class UIManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
+                if (isTitle && settingPanel.activeSelf)
+                {
+                    SoundManager.Inst.SetEffectSound(0);
+                    settingPanel.SetActive(false);
+                }
+
                 if (!isEsc)
                 {
                     SoundManager.Inst.SetEffectSound(0);
@@ -50,7 +58,6 @@ public class UIManager : MonoBehaviour
                 }
                 else
                 {
-                    Time.timeScale = 0;
                     if (Input.GetKeyDown(KeyCode.Escape))
                     {
                         OnClickReturnToGame();
@@ -70,11 +77,24 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void ActivePanal(GameObject panal)
+    {
+        SoundManager.Inst.SetEffectSound(0);
+        panal.SetActive(true);
+    }
+    public void UnActivePanal(GameObject panal)
+    {
+        SoundManager.Inst.SetEffectSound(0);
+        OnClickReturnToGame();
+        panal.SetActive(false);
+    }
+
     public void OnClickReturnToGame()
     {
         SoundManager.Inst.SetEffectSound(0);
         isEsc = false;
         escMenu.SetActive(false);
+        isTitle = false;
         Time.timeScale = 1;
         GameManager.Inst.SetGameState(GameState.Start);
     }

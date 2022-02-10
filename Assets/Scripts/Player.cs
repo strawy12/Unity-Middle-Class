@@ -16,7 +16,6 @@ public class Player : MonoBehaviour
 
     Rigidbody2D body; // 컴포넌트에서 RigidBody를 받아올 변수
     private RaycastHit2D hit;
-    [SerializeField] private bool isGround = true;
     [SerializeField] private GameObject player;
     private Collider2D col;
 
@@ -41,11 +40,11 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-
-        if(Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             StageManager.Inst.ReStart();
         }
+
         if (GameManager.Inst.gameState == GameState.Start)
         {
             if (isChangeGravity)
@@ -53,7 +52,9 @@ public class Player : MonoBehaviour
                 Gravity();
                 return;
             }
+
             Move();
+            ChangeFace();
             SpaceGravityCheck();
             Gravity();
         }
@@ -97,6 +98,23 @@ public class Player : MonoBehaviour
         if (!detectCheck)
         {
             Invoke("RayCastOut", .2f);
+        }
+    }
+
+    private void ChangeFace()
+    {
+        if(body.velocity.x == 0f)
+        {
+            float posX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
+
+            if (posX > transform.position.x)
+            {
+                transform.localScale = new Vector3(-1f, 1f, 1f);
+            }
+            else if (posX < transform.position.x)
+            {
+                transform.localScale = new Vector3(1f, 1f, 1f);
+            }
         }
     }
 
@@ -229,7 +247,7 @@ public class Player : MonoBehaviour
         {
             transform.localScale = new Vector3(-1f, 1f, 1f);
         }
-        else
+        else if(moveDirValue < -0.1f)
         {
             transform.localScale = new Vector3(1f, 1f, 1f);
         }
@@ -271,11 +289,10 @@ public class Player : MonoBehaviour
 
     void Jump()
     {
-        if (isGround && !isSpaceCheck)
+        if (IsGrounded() && !isSpaceCheck)
         {
             animator.Play("Slime Jump Up");
             SoundManager.Inst.SetEffectSound(2);
-            isGround = false;
             body.AddForce(currentGravityDir * jumpForce * -1f, ForceMode2D.Impulse);
         }
     }
@@ -298,10 +315,6 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Square"))
-        {
-            isGround = true;
-        }
         if(collision.gameObject.CompareTag("Goal"))
         {
             clearPanel.SetActive(true);
@@ -312,11 +325,11 @@ public class Player : MonoBehaviour
 
     void Gravity()
     {
-        if (isChangeGravity && isGround)
+        if (isChangeGravity && IsGrounded())
         {
             isChangeGravity = false;
         }
-        if (isChangeGravity && !isGround)
+        if (isChangeGravity && !IsGrounded())
         {
             body.AddForce(currentGravityDir * 9.8f * 7f);
         }
