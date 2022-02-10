@@ -36,31 +36,26 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-<<<<<<< HEAD
+
         if (GameManager.Inst.gameState == GameState.Start)
         {
             Move();
-            Jump();
+            SpaceGravityCheck();
             Gravity();
         }
-=======
-        if(GameManager.Inst.gameState == GameState.Start)
-        Move();
-        Gravity();
-        SpaceGravityCheck();
-        
         if (Input.GetKeyDown(KeyCode.Space))
         {
             DetectedRaycast();
             Jump();
         }
+
     }
 
     void RayCastOut()
     {
         currentGravityState = GravityState.Down;
         Rotation();
->>>>>>> kimyujin
+
     }
 
     void SpaceGravityCheck()
@@ -264,12 +259,10 @@ public class Player : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(0f, 0f, zRotate);
 
-<<<<<<< HEAD
+
             SetGravityDirecction();
-=======
-        SetGravityDirecction();
+
         
->>>>>>> kimyujin
     }
 
     private void SetGravityDirecction()
