@@ -8,6 +8,7 @@ TagManager:
   - Gravity
   - Bullet
   - Goal
+  - Platform
   layers:
   - Default
   - TransparentFX

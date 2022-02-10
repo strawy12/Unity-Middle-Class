@@ -15,21 +15,14 @@ public class FadeText : MonoBehaviour
         StartCoroutine(Fade());
     }
 
-    // Update is called once per frame
     private IEnumerator Fade()
     {
         while(true)
         {
             text.DOFade(0f, fadeTime);
-<<<<<<< HEAD
-            new WaitForSeconds(fadeTime);
-            text.DOFade(1f, fadeTime);
-            new WaitForSeconds(fadeTime);
-=======
             yield return new WaitForSeconds(fadeTime);
             text.DOFade(1f, fadeTime);
             yield return new WaitForSeconds(fadeTime);
->>>>>>> injun
         }
     }
 }

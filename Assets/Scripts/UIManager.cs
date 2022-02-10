@@ -24,69 +24,50 @@ public class UIManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-<<<<<<< HEAD
         Time.timeScale = 0f;
         GameManager.Inst.SetGameState(GameState.Stop);
-=======
-        if(!StageManager.Inst.isTutorial)
-        {
-            TurnOnTutorialPanel();
-        }
->>>>>>> injun
     }
-
-    // Update is called once per frame
     void Update()
     {
-<<<<<<< HEAD
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (isTutorialed)
         {
-            if (!isEsc)
-            {
-                SoundManager.Inst.SetEffectSound(0);
-                escMenu.SetActive(true);
-                GameManager.Inst.SetGameState(GameState.Stop);
-                isEsc = true;
-            }
-
-            else
-=======
-        if(isTutorialed)
-        {
-            if(Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0))
             {
                 NextTutorialText();
             }
-            
-        } 
+
+        }
         if (GameManager.Inst.gameState != GameState.Clear)
         {
-            if (!isEsc)
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                if (Input.GetKeyDown(KeyCode.Escape))
+                if (!isEsc)
                 {
+                    SoundManager.Inst.SetEffectSound(0);
                     escMenu.SetActive(true);
                     GameManager.Inst.SetGameState(GameState.Stop);
                     isEsc = true;
                 }
-            }
-            else if (isEsc)
->>>>>>> injun
-            {
-                Time.timeScale = 0;
-                if (Input.GetKeyDown(KeyCode.Escape))
+                else
                 {
-                    OnClickReturnToGame();
-                    settingPanel.SetActive(false);
+                    Time.timeScale = 0;
+                    if (Input.GetKeyDown(KeyCode.Escape))
+                    {
+                        OnClickReturnToGame();
+                        settingPanel.SetActive(false);
+                    }
                 }
             }
         }
     }
-
     public void OnClickStartBtn()
     {
         titleCanvas.SetActive(false);
         OnClickReturnToGame();
+        if (!StageManager.Inst.isTutorial)
+        {
+            TurnOnTutorialPanel();
+        }
     }
 
     public void OnClickReturnToGame()
@@ -102,8 +83,6 @@ public class UIManager : MonoBehaviour
         SoundManager.Inst.SetEffectSound(0);
         escMenu.SetActive(false);
         settingPanel.SetActive(true);
-
-        Text text = null;
     }
     public void OnClickExit()
     {

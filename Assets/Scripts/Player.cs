@@ -41,22 +41,18 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-<<<<<<< HEAD
-        if (isChangeGravity)
-        {
-            Gravity();
-            return;
-        }
 
-
-=======
         if(Input.GetKeyDown(KeyCode.R))
         {
             StageManager.Inst.ReStart();
         }
->>>>>>> injun
         if (GameManager.Inst.gameState == GameState.Start)
         {
+            if (isChangeGravity)
+            {
+                Gravity();
+                return;
+            }
             Move();
             SpaceGravityCheck();
             Gravity();
