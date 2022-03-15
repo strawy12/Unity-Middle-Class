@@ -12,6 +12,15 @@ public class GameManager : MonoSingleTon<GameManager>
     public Tilemap tileMap;
     private TileMapData[,] tilemapInfoArray;
 
+    private UIManager uiManager;
+    public UIManager UI {  get { return uiManager; } }
+
+
+    private void Awake()
+    {
+        uiManager = GetComponent<UIManager>();
+    }
+
     void Start()
     {
         SetGameState(GameState.Start);

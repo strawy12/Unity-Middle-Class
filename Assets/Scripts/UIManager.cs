@@ -18,6 +18,10 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text tutorialText;
     [SerializeField]
+    private Text fireText;
+    [SerializeField]
+    private GameObject fireUIPanal;
+    [SerializeField]
     [TextArea]
     private string[] tutorialString;
     private int tutorialTextNum = 0;
@@ -40,8 +44,9 @@ public class UIManager : MonoBehaviour
         else
         {
             titleCanvas.SetActive(false);
+            fireUIPanal.SetActive(true);
         }
-       
+
         SliderValueSet();
 
 
@@ -91,6 +96,7 @@ public class UIManager : MonoBehaviour
     public void OnClickStartBtn()
     {
         titleCanvas.SetActive(false);
+        fireUIPanal.SetActive(true);
         OnClickReturnToGame();
         if (!DataManager.Inst.CurrentPlayer.isTutorial)
         {
@@ -132,6 +138,8 @@ public class UIManager : MonoBehaviour
     }
     public void OnClickRestart()
     {
+        Time.timeScale = 1f;
+        GameManager.Inst.SetGameState(GameState.Start);
         SceneManager.LoadScene("Main");
     }
     public void TurnOnTutorialPanel()
@@ -143,16 +151,22 @@ public class UIManager : MonoBehaviour
     }
     public void NextTutorialText()
     {
-       if(tutorialTextNum >= 3)
+        if (tutorialTextNum >= 3)
         {
             isTutorialed = false;
             tutorialPanel.SetActive(false);
         }
-       else {
+        else
+        {
             tutorialText.text = "";
             tutorialTextNum++;
             tutorialText.DOText(tutorialString[tutorialTextNum], tutorialString[tutorialTextNum].Length * 0.03f);
-       }
+        }
+    }
+
+    public void UpdateFireCountText(int count, int maxCount)
+    {
+        fireText.text = string.Format("{0} / {1}", count, maxCount);
     }
     public void SliderValueSet()
     {

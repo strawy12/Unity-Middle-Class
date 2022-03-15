@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 {
     private Vector2 currentGravityDir;
     private GravityState currentGravityState;
-    [SerializeField]private GameObject clearPanel;
+    [SerializeField] private GameObject clearPanel;
     public float speed;
     public float rotateSpeed = 10.0f;
     public float jumpForce = 1.0f; // Á¡ÇÁÇÏ´Â Èû
@@ -38,6 +38,14 @@ public class Player : MonoBehaviour
         currentGravityDir = Vector2.down;
     }
 
+    private void FixedUpdate()
+    {
+        if (GameManager.Inst.gameState == GameState.Start)
+        {
+            Gravity();
+        }
+    }
+
     private void Update()
     {
 
@@ -45,14 +53,12 @@ public class Player : MonoBehaviour
         {
             if (isChangeGravity)
             {
-                Gravity();
                 return;
             }
 
             Move();
             ChangeFace();
             SpaceGravityCheck();
-            Gravity();
         }
 
         if (Input.GetKeyDown(KeyCode.Space))
@@ -99,7 +105,7 @@ public class Player : MonoBehaviour
 
     private void ChangeFace()
     {
-        if(body.velocity.x == 0f)
+        if (body.velocity.x < 0.1f && body.velocity.x > -0.1f)
         {
             float posX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
 
@@ -243,7 +249,7 @@ public class Player : MonoBehaviour
         {
             transform.localScale = new Vector3(-1f, 1f, 1f);
         }
-        else if(moveDirValue < -0.1f)
+        else if (moveDirValue < -0.1f)
         {
             transform.localScale = new Vector3(1f, 1f, 1f);
         }
@@ -311,7 +317,7 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("Goal"))
+        if (collision.gameObject.CompareTag("Goal"))
         {
             clearPanel.SetActive(true);
             GameManager.Inst.SetGameState(GameState.Clear);
@@ -337,6 +343,31 @@ public class Player : MonoBehaviour
     }
     private bool IsGrounded()
     {
-        return Physics2D.OverlapBox(col.bounds.center, col.bounds.size, 180f, LayerMask.GetMask("Block"));
+        Vector2 pos = Vector2.zero;
+        Vector2 size = new Vector2(col.bounds.size.x * 0.5f, col.bounds.size.y * 0.5f);
+
+        switch (currentGravityState)
+        {
+            case GravityState.Down:
+                pos = new Vector2(col.bounds.center.x, col.bounds.min.y);
+                break;
+
+            case GravityState.Up:
+                pos = new Vector2(col.bounds.center.x, col.bounds.max.y);
+                break;
+
+
+            case GravityState.Left:
+                pos = new Vector2(col.bounds.min.x, col.bounds.center.y);
+                break;
+
+            case GravityState.Right:
+                pos = new Vector2(col.bounds.max.x, col.bounds.center.y);
+                break;
+
+        }
+
+
+        return Physics2D.OverlapBox(pos, size, 180f, LayerMask.GetMask("Block"));
     }
 }

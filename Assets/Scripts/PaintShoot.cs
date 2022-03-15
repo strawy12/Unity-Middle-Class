@@ -23,13 +23,15 @@ public class PaintShoot : MonoBehaviour
     private Transform bulletPosition;
 
     private Animator animator;
-    private bool isShoot = false;
-    public int Remaining; //남은 개수
+    public int maxCount;
+    public int currentCount; //남은 개수
     int tileX, tileY;
     void Start()
     {
         line = GetComponent<LineRenderer>();
         animator = GetComponent<Animator>();
+        currentCount = maxCount;
+        GameManager.Inst.UI.UpdateFireCountText(currentCount, maxCount);
     }
     void Update()
     {
@@ -71,14 +73,13 @@ public class PaintShoot : MonoBehaviour
            
             if (hit && hit.transform.CompareTag("Platform"))
             {
-                if (Remaining > 0)
+                if (currentCount > 0)
                 {
-                    //isShoot = true;
                     animator.Play("Slime Shoot");
+                    currentCount--;
                     FirePaint();
                     SoundManager.Inst.SetEffectSound(1);
-                    Remaining--;
-
+                    GameManager.Inst.UI.UpdateFireCountText(currentCount, maxCount);
                     shootDir = new Vector3(hit.point.x - (v3Int.x + 0.5f), hit.point.y - (v3Int.y + 0.5f)).normalized;
                     if (Mathf.Abs(shootDir.x) == Mathf.Abs(shootDir.y)) { return; }
                     GameManager.Inst.tileMap.RefreshAllTiles();
@@ -91,6 +92,14 @@ public class PaintShoot : MonoBehaviour
             }
         }
     }
+    
+    private IEnumerator ShootFire()
+    {
+        yield return new WaitForSeconds(0.4f);
+        FirePaint();
+        SoundManager.Inst.SetEffectSound(1);
+    }
+
     public void ShootDir(Vector3 hitP, Vector3Int v3I)
     {
         shootDir = new Vector3(hitP.x - (v3I.x + 0.5f), hitP.y - (v3I.y + 0.5f)).normalized;
