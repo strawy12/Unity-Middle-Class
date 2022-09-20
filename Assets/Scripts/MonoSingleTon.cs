@@ -5,20 +5,20 @@ using UnityEngine;
 public class MonoSingleTon<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static T inst;
-    private static bool shuttingDown = false;
-    private static object locker = new object();
+    //private static bool shuttingDown = false;
+    //private static object locker = new object();
 
     public static T Inst
     {
         get
         {
-            if (shuttingDown)
-            {
-                Debug.LogWarning("[Singleton] Instance " + typeof(T) + " already destroyed. Returning null.");
-            }
+            //if (shuttingDown)
+            //{
+            //    Debug.LogWarning("[Singleton] Instance " + typeof(T) + " already destroyed. Returning null.");
+            //}
 
-            lock (locker)
-            {
+            //lock (locker)
+            //{
                 if (inst == null)
                 {
                     inst = FindObjectOfType<T>();
@@ -28,16 +28,16 @@ public class MonoSingleTon<T> : MonoBehaviour where T : MonoBehaviour
                     }
                 }
                 return inst;
-            }
+            //}
         }
     }
-    private void OnDestroy()
-    {
-        shuttingDown = true;
-    }
+    //private void OnDestroy()
+    //{
+    //    shuttingDown = true;
+    //}
 
-    private void OnApplicationQuit()
-    {
-        shuttingDown = true;
-    }
+    //private void OnApplicationQuit()
+    //{
+    //    shuttingDown = true;
+    //}
 }

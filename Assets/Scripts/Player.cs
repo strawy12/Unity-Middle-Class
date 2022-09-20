@@ -25,6 +25,8 @@ public class Player : MonoBehaviour
     public bool isSpaceCheck;
     public bool isChangeGravity;
 
+    Coroutine coroutine = null;
+
     private Vector3Int CurrentTilePos { get { return GameManager.Inst.tileMap.WorldToCell(transform.position); } }
 
     void Start()
@@ -74,32 +76,50 @@ public class Player : MonoBehaviour
 
     }
 
-    void RayCastOut()
+    IEnumerator RayCastOut()
     {
+        yield return new WaitForSeconds(.2f);
         if (currentGravityState != GravityState.Down && !isChangeGravity)
         {
             currentGravityState = GravityState.Down;
             Rotation();
         }
+        coroutine = null;
     }
 
     void SpaceGravityCheck()
     {
         bool detectCheck = false;
+        bool canMaintain = false;
 
         for (int index = 0; index < (int)GravityState.Count; index++)
         {
             if (CheckDetectRaycast((GravityState)index))
             {
                 detectCheck = true;
+
+                if (!canMaintain && (GravityState)index == currentGravityState)
+                    canMaintain = true;
             }
         }
 
         isSpaceCheck = detectCheck && isSpaceCheck;
 
-        if (!detectCheck)
+        if(canMaintain)
         {
-            Invoke("RayCastOut", .2f);
+            if (coroutine != null)
+            {
+                StopCoroutine(coroutine);
+                coroutine = null;  
+            }
+        }
+
+
+        if (!detectCheck || !canMaintain)
+        {
+            if (coroutine != null) return;
+
+            coroutine = StartCoroutine(RayCastOut());
         }
     }
 
@@ -163,12 +183,16 @@ public class Player : MonoBehaviour
         {
             if (currentGravityState != data.detectType)
             {
-                Debug.Log(currentGravityState);
-                Debug.Log(data.detectType);
+                isChangeGravity = true;
+
+                if (coroutine != null)
+                {
+                    StopCoroutine(coroutine);
+                    coroutine = null;
+                }
 
                 currentGravityState = data.detectType;
 
-                isChangeGravity = true;
                 Rotation();
             }
         }
@@ -216,6 +240,7 @@ public class Player : MonoBehaviour
             raycastData.isdetected = true;
             raycastData.hitPos = hit.point;
             raycastData.detectDistance = Vector3Int.Distance(tilepos, CurrentTilePos);
+
 
             return true;
         }
@@ -367,7 +392,6 @@ public class Player : MonoBehaviour
 
         }
 
-
-        return Physics2D.OverlapBox(pos, size, 180f, LayerMask.GetMask("Block"));
+        return Physics2D.OverlapBoxAll(pos, size, 180f).Length > 1;
     }
 }

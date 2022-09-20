@@ -102,6 +102,9 @@ public class UIManager : MonoBehaviour
         stageCanvas.SetActive(false);
         fireUIPanal.SetActive(true);
         OnClickReturnToGame();
+
+
+
         if (!DataManager.Inst.CurrentPlayer.isTutorial)
         {
             TurnOnTutorialPanel();
@@ -110,12 +113,14 @@ public class UIManager : MonoBehaviour
 
     public void ClickStageBtn()
     {
+        SoundManager.Inst.SetEffectSound(0);
         titleCanvas.SetActive(false);
         stageCanvas.SetActive(true);
     }
 
     public void ClickBackBtn()
     {
+        SoundManager.Inst.SetEffectSound(0);
         titleCanvas.SetActive(true);
         stageCanvas.SetActive(false);
     }
@@ -155,7 +160,6 @@ public class UIManager : MonoBehaviour
     public void OnClickRestart()
     {
         Time.timeScale = 1f;
-        GameManager.Inst.SetGameState(GameState.Start);
         SceneManager.LoadScene("Main");
     }
     public void TurnOnTutorialPanel()
@@ -174,6 +178,7 @@ public class UIManager : MonoBehaviour
         }
         else
         {
+            tutorialText.DOKill(false);
             tutorialText.text = "";
             tutorialTextNum++;
             tutorialText.DOText(tutorialString[tutorialTextNum], tutorialString[tutorialTextNum].Length * 0.03f);

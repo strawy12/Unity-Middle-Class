@@ -12,6 +12,8 @@ public class Font : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     private void Start()
     {
+        Destroy(this);
+        return;
         childIndex = transform.GetSiblingIndex();
         StartCoroutine(SwingFont());
     }
